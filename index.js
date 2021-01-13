@@ -36,11 +36,11 @@ const parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
 
 const nina = fs.readFileSync("Nina.ufsd");
 const parsedNina = new ufsd(new KaitaiStream(nina));
-// console.log(parsedNina.eyebrowType);
+console.log(parsedNina);
 // console.log(parsedNina.eyebrowType.toString(16));
 
 const map = fs.readFileSync("maps_Switch.json");
 const parsedmap = JSON.parse(map);
 // console.log(parsedmap.hair[0][0][0]);
-console.log(getStringLocation(parsedmap.hair, '0x' + pad(parsedNina.hairType.toString(16), 2)));
+// console.log(getStringLocation(parsedmap.hair, '0x' + pad(parsedNina.hairType.toString(16), 2)));
 
