@@ -15,7 +15,7 @@
           "<svg alt='row 2 column 5' width='45' height='45'><rect width='45' height='45' style='fill:rgb(60, 45, 35)'/></svg>"
        ]
     ],
-    "hair-color":[
+    "hairColor":[
        [
           "<svg alt='default row 1 column 1' width='45' height='45'><rect width='45' height='45' style='fill:rgb(0, 0, 0)'/></svg>",
           "<svg alt='default row 1 column 2' width='45' height='45'><rect width='45' height='45' style='fill:rgb(64, 32, 16)'/></svg>",
@@ -29,7 +29,7 @@
           "<svg alt='default row 2 column 4' width='45' height='45'><rect width='45' height='45' style='fill:rgb(208, 160, 74)'/></svg>"
        ]
     ],
-    "eye-color":[
+    "eyeColor":[
        [
           "<svg alt='default row 1 column 1' width='45' height='45'><rect width='45' height='45' style='fill:rgb(0, 0, 0)'/></svg>",
           "<svg alt='default row 1 column 2' width='45' height='45'><rect width='45' height='45' style='fill:rgb(108, 112, 112)'/></svg>",
@@ -41,7 +41,7 @@
           "<svg alt='default row 2 column 3' width='45' height='45'><rect width='45' height='45' style='fill:rgb(56, 112, 88)'/></svg>"
        ]
     ],
-    "mouth-color":[
+    "mouthColor":[
        [
           "<svg alt='default 1st' width='45' height='45'><rect width='45' height='45' style='fill:rgb(216, 82, 8)'/></svg>",
           "<svg alt='default 2nd' width='45' height='45'><rect width='45' height='45' style='fill:rgb(240, 12, 8)'/></svg>",
@@ -50,7 +50,7 @@
           "<svg alt='default 5th' width='45' height='45'><rect width='45' height='45' style='fill:rgb(140, 80, 64)'/></svg>"
        ]
     ],
-    "glasses-color":[
+    "glassesColor":[
        [
           "<svg alt='default row 1 column 1' width='45' height='45'><rect width='45' height='45' style='fill:rgb(0, 0, 0)'/></svg>",
           "<svg alt='default row 1 column 2' width='45' height='45'><rect width='45' height='45' style='fill:rgb(96, 56, 16)'/></svg>",
@@ -62,7 +62,7 @@
           "<svg alt='default row 2 column 3' width='45' height='45'><rect width='45' height='45' style='fill:rgb(120, 112, 104)'/></svg>"
        ]
     ],
-    "favorite-color":[
+    "favoriteColor":[
        [
           "<svg alt='row 1 column 1' width='45' height='45'><rect width='45' height='45' style='fill:rgb(210, 30, 20)'/></svg>",
           "<svg alt='row 1 column 2' width='45' height='45'><rect width='45' height='45' style='fill:rgb(255, 110, 25)'/></svg>",
@@ -255,7 +255,7 @@
           "<img src='https://i.ibb.co/tmz1Qw3/female.png' alt='female' width='45' height='45'>"
        ]
     ],
-    "face types":[
+    "faceType":[
        [
           "<svg alt='row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><path d='M26 11.2c-7.75 0-13.31 6.29-12.86 14 .44 7.56 11.18 15.6 12.86 15.6s12.42-8 12.86-15.57C39.31 17.49 33.75 11.2 26 11.2z' fill='#fff' stroke='#000' stroke-width='2.34'></path><path d='M22.42 25.42a1.72 1.72 0 1 1-1.72-1.72 1.72 1.72 0 0 1 1.72 1.72zM32.94 25.42a1.72 1.72 0 1 1-1.72-1.72 1.72 1.72 0 0 1 1.72 1.72zM26 34.46a14.47 14.47 0 0 1-5-.84l.6-1.65a13.43 13.43 0 0 0 8.72 0l.6 1.65a14.51 14.51 0 0 1-5 .84z' fill='#bfbfbf'></path></svg>",
           "<svg alt='row 1 column 2' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='26' r='14.02' fill='#fff' stroke='#000' stroke-width='2.34'></circle><path d='M22.42 25.42a1.72 1.72 0 1 1-1.72-1.72 1.72 1.72 0 0 1 1.72 1.72zM32.94 25.42a1.72 1.72 0 1 1-1.72-1.72 1.72 1.72 0 0 1 1.72 1.72zM26 34.47a14.48 14.48 0 0 1-5-.85l.6-1.65a13.43 13.43 0 0 0 8.72 0l.6 1.65a14.52 14.52 0 0 1-5 .85z' fill='#bfbfbf'></path></svg>",
@@ -275,7 +275,7 @@
           "<svg alt='row 3 column 4' width='45' height='45' viewBox='0 0 52 52'><path d='M30.58 42.73l6.62-4.39a40.52 40.52 0 0 1 .29-5.68c.39-3.61 1.22-6.49 1.22-8.24 0-7.89-5-14.29-12.71-14.29s-12.71 6.4-12.71 14.29c0 1.75.83 4.63 1.22 8.24a40.52 40.52 0 0 1 .29 5.68l6.62 4.39z' fill='#fff' stroke='#000' stroke-width='2.34'></path><circle cx='20.7' cy='25.48' r='1.72' fill='#bfbfbf'></circle><circle cx='31.22' cy='25.48' r='1.72' fill='#bfbfbf'></circle><path d='M26 34.53a14.24 14.24 0 0 1-5-.85l.6-1.64a13.56 13.56 0 0 0 8.72 0l.6 1.64a14.28 14.28 0 0 1-5 .85z' fill='#bfbfbf'></path></svg>"
        ]
     ],
-    "face makeup":[
+    "faceMakeup":[
        [
           "<svg alt='row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='25.96' r='16.09' fill='#fff' stroke='#999' stroke-width='2.48'></circle></svg>",
           "<svg alt='row 1 column 2' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='25.96' r='16.09' fill='#fff' stroke='#999' stroke-width='2.48'></circle><path d='M22.22 30.28c1.25 2.71.39 5.76-1.91 6.82s-5.18-.27-6.43-3-.39-5.76 1.92-6.82 5.2.29 6.42 3zM29.78 30.28C28.53 33 29.39 36 31.69 37.1s5.18-.27 6.43-3 .39-5.76-1.92-6.82-5.2.29-6.42 3z' fill='#ffbaba'></path></svg>",
@@ -295,7 +295,7 @@
           "<svg alt='row 3 column 4' width='45' height='45' viewBox='0 0 52 52'><defs><linearGradient id='7719c1fb-aefc-4f3b-abf2-1c79810f4b9a' x1='26' y1='28.48' x2='26' y2='40.81' gradientUnits='userSpaceOnUse'><stop offset='0' stop-color='#fff'></stop><stop offset='.06' stop-color='#e7e8e8'></stop><stop offset='.17' stop-color='#c7caca'></stop><stop offset='.28' stop-color='#adb2b1'></stop><stop offset='.4' stop-color='#999f9e'></stop><stop offset='.54' stop-color='#8b9190'></stop><stop offset='.71' stop-color='#838988'></stop><stop offset='1' stop-color='#808786'></stop></linearGradient></defs><path d='M42.09 26A16.09 16.09 0 1 1 26 9.88 16.09 16.09 0 0 1 42.09 26z' fill='#fff' stroke='#999' stroke-width='2.48'></path><path d='M40.53 29h-1.3a14.21 14.21 0 0 1-2.72 5.05L33 30.54a11.34 11.34 0 0 0-7-2.05 11.34 11.34 0 0 0-7 2.05l-3.51 3.55A14.21 14.21 0 0 1 12.77 29h-1.3a14.87 14.87 0 0 0 14.14 11.79c-1 0 0 0 0 0h.76s1 0 0 0A14.87 14.87 0 0 0 40.53 29zm-8.36 7.08c-1.06.63-2-.21-2.52-.51s-.8-.81-.92-.77h-5.46c-.12 0-.43.34-.92.77s-1.46 1.14-2.52.51-1-2.27.11-3.87C21.62 29.78 26 30 26 30s4.38-.22 6.06 2.25c1.08 1.6 1.18 3.23.11 3.87z' fill='url(#7719c1fb-aefc-4f3b-abf2-1c79810f4b9a)'></path><path d='M37.59 35.23l-1.08-1.14L33 30.54a11.34 11.34 0 0 0-7-2.05 11.34 11.34 0 0 0-7 2.05l-3.51 3.55-1.08 1.14a14.78 14.78 0 0 0 11.2 5.56c-1 0 0 0 0 0h.76s1 0 0 0a14.78 14.78 0 0 0 11.22-5.56zm-5.42.89c-1.06.63-2-.21-2.52-.51s-.8-.81-.92-.77h-5.46c-.12 0-.43.34-.92.77s-1.46 1.14-2.52.51-1-2.27.11-3.87C21.62 29.78 26 30 26 30s4.38-.22 6.06 2.25c1.08 1.6 1.18 3.23.11 3.87z' fill='#808786'></path></svg>"
        ]
     ],
-    "face wrinkles":[
+    "faceWrinkles":[
        [
           "<svg alt='row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='25.96' r='16.09' fill='#fff' stroke='#999' stroke-width='2.48'></circle></svg>",
           "<svg alt='row 1 column 2' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='25.96' r='16.09' fill='#fff' stroke='#999' stroke-width='2.48'></circle><path d='M18.58 28.7a25.76 25.76 0 0 0 4.06-4.18 6.28 6.28 0 0 0 .84-2.18M33.42 28.7a25.76 25.76 0 0 1-4.06-4.18 6.28 6.28 0 0 1-.84-2.18' fill='none' stroke='#996d54' stroke-width='1.86'></path></svg>",
@@ -315,7 +315,7 @@
           "<svg alt='row 3 column 4' width='45' height='45' viewBox='0 0 52 52'><path d='M42.09 26A16.09 16.09 0 1 1 26 9.88 16.09 16.09 0 0 1 42.09 26z' fill='#fff' stroke='#999' stroke-width='2.48'></path><path fill='none' stroke='#996d54' stroke-width='1.86' d='M12.58 21.26l2.38-1.3M13.33 23.65l2.38-1.29M16 24.63c2.11 2 5.43 1.37 7.41-1.46M39.42 21.26l-2.38-1.3M38.67 23.65l-2.38-1.29M36 24.63c-2.11 2-5.43 1.37-7.41-1.46'></path><path d='M37.58 34.52a11.06 11.06 0 0 0-1.3-3.72 11.19 11.19 0 0 0-2.79-3.21M35.63 36.69a13.36 13.36 0 0 0-1.49-4.46 11.63 11.63 0 0 0-2.92-3.38M14.42 34.52a11.06 11.06 0 0 1 1.3-3.72 11.19 11.19 0 0 1 2.79-3.21M16.37 36.69a13.36 13.36 0 0 1 1.49-4.46 11.63 11.63 0 0 1 2.92-3.38' fill='none' stroke='#996d54' stroke-width='1.86' fill-rule='evenodd'></path></svg>"
        ]
     ],
-    "hair":[
+    "hairType":[
        [
           [
              "<svg alt='page 1 row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><g id='3fed5af3-0658-4484-ba2d-8afe7d842181' data-name='33'><path d='M26 11.157c-7.039 0-11.36 6.324-10.829 15.005.464 7.58 4.873 12.916 10.829 12.916s10.364-5.336 10.828-12.916c.532-8.681-3.79-15.005-10.828-15.005z' fill='#fff' stroke='#bfbfbf' stroke-width='2.475'></path><path d='M38.808 22.361a12.808 12.808 0 1 0-25.616 0 23.464 23.464 0 0 0 .622 7.442l1.334-6.76 2.223 2.846 1.691-4.9 2.529 2.765 2.363-4.554L26 23.487l2.045-4.287 2.363 4.555 2.53-2.765 1.69 4.9 2.224-2.846 1.334 6.76a23.5 23.5 0 0 0 .622-7.443z'></path></g></svg>",
@@ -503,7 +503,7 @@
           ]
        ]
     ],
-    "eyebrows":[
+    "eyebrowType":[
        [
           "<svg alt='row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><path stroke='#000' d='M7.827 28.891v4.686l35.528-10.271-7.642-8.052L7.827 28.891z'></path></svg>",
           "<svg alt='row 1 column 2' width='45' height='45' viewBox='0 0 52 52'><path d='M44.141 25.274S39.922 18.9 29.7 19.293c-10.5.4-21.3 11.086-21.3 11.086s12.22-9.153 21.336-9.591c9.418-.452 14.405 4.486 14.405 4.486z' stroke='#000' stroke-width='2.194'></path></svg>",
@@ -537,7 +537,7 @@
           "<svg alt='row 4 column 6' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='25.96' r='16.09' fill='#fff' stroke='#bfbfbf' stroke-width='2.48'></circle></svg>"
        ]
     ],
-    "eyes":[
+    "eyeType":[
        [
           [
              "<svg alt='page 1 row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><path d='M14.51 28.62a8.55 8.55 0 0 0 8.43 8.66 8.54 8.54 0 0 0 8.42-8.66c0-4.78-3.77-7.31-8.42-7.31s-8.43 2.53-8.43 7.31z' fill='#6c7070'></path><path d='M16.16 27.86a6.78 6.78 0 1 0 6.78-6.77 6.78 6.78 0 0 0-6.78 6.77z' fill='#6c7070'></path><path d='M19.55 27.86a3.39 3.39 0 1 0 3.39-3.38 3.39 3.39 0 0 0-3.39 3.38z'></path><path d='M9 27.88c1.66-3.74 6.77-8.08 14-8.08s12.29 4.34 14 8.08' fill='none' stroke='#000' stroke-width='3.28'></path></svg>",
@@ -623,7 +623,7 @@
           ]
        ]
     ],
-    "nose":[
+    "noseType":[
        [
           "<svg alt='row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><path d='M27.23 14.86a54.13 54.13 0 0 1-2.54 9c-1.53 3.59-3.87 4.35-3.05 8.86.89 4.91 8.89 4.43 8.89 4.43' fill='none' stroke='#000' stroke-width='3.51'></path></svg>",
           "<svg alt='row 1 column 2' width='45' height='45' viewBox='0 0 52 52'><path d='M38.65 25.21s-2.48 8.11-12.42 8.11-12.42-8.11-12.42-8.11' fill='none' stroke='#000' stroke-width='3.51'></path></svg>",
@@ -649,7 +649,7 @@
           "<svg alt='row 3 column 6' width='45' height='45' viewBox='0 0 52 52'><path d='M35.41 21.72s3.22 7 .77 10.82-5.41 8.51-10.18 8.51-7.73-4.64-10.18-8.51.77-10.82.77-10.82' fill='none' stroke='#000' stroke-width='3.51'></path></svg>"
        ]
     ],
-    "mouth":[
+    "mouthType":[
        [
           "<svg alt='row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><path fill='none' stroke='#000' stroke-width='4.018' d='M12.187 26.001h27.626'></path></svg>",
           "<svg alt='row 1 column 2' width='45' height='45' viewBox='0 0 52 52'><path d='M25.964 30.259h.077c9.685-.035 16.444-7.394 16.444-7.394l-.3-.015A35.388 35.388 0 0 1 26 26.518 35.384 35.384 0 0 1 9.815 22.85l-.294.015s6.758 7.359 16.443 7.394z' fill='#be4e26'></path><path d='M42.188 22.87c-1.5-.076-8.53-.45-10.664-.45a16.5 16.5 0 0 0-5.546 1.456H25.9a15.422 15.422 0 0 0-5.419-1.456c-2.136 0-9.179.374-10.667.45A35.384 35.384 0 0 0 26 26.538a35.388 35.388 0 0 0 16.188-3.668z' fill='#712a04'></path></svg>",
@@ -699,7 +699,7 @@
           "<svg alt='row 6 column 6' width='45' height='45' viewBox='0 0 52 52'><path d='M29.3 33.559c-3.971 4.26-9.842 1.519-9.842-2.178a3.867 3.867 0 0 1 4.024-3.681 3.867 3.867 0 0 1-4.028-3.683c0-3.7 5.871-6.438 9.842-2.176M21.526 27.699h4.49' fill='none' stroke='#000' stroke-width='3.014'></path></svg>"
        ]
     ],
-    "glasses":[
+    "glassesType":[
        [
           "<svg alt='row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='26' r='16.09' fill='#fff' stroke='#bfbebd' stroke-width='2.48'></circle></svg>",
           "<svg alt='row 1 column 2' width='45' height='45' viewBox='0 0 52 52'><path d='M42.09 26A16.09 16.09 0 1 1 26 9.91 16.1 16.1 0 0 1 42.09 26z' fill='#fff' stroke='#bfbebd' stroke-width='2.48'></path><path d='M24.36 25c0-2.43-2.74-4.4-6.11-4.4s-6.11 2-6.11 4.4 2.73 4.39 6.11 4.39 6.11-1.93 6.11-4.39zM27.64 25c0-2.43 2.74-4.4 6.11-4.4s6.11 2 6.11 4.4-2.73 4.39-6.11 4.39-6.11-1.93-6.11-4.39zM27.42 24.75h-2.84' fill='none' stroke='#000' stroke-width='1.24'></path></svg>",
@@ -729,7 +729,7 @@
           "<svg alt='row 4 column 5' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='26' r='16.09' fill='#fff' stroke='#bfbebd' stroke-width='2.48'></circle><path d='M41.34 24.22c-1.08-2.09-3.78-3.58-6.48-4.22a48.45 48.45 0 0 0-8.86-.64 48.45 48.45 0 0 0-8.86.64c-2.7.64-5.4 2.13-6.48 4.22a4.23 4.23 0 0 0-.07 3.72l1.66-.43c.81 2.57 4.1 3.92 7.44 3a6.13 6.13 0 0 0 4.9-6.15h2.83c0 .59 0 0 0 0a6.13 6.13 0 0 0 4.9 6.15c3.34.91 6.63-.44 7.44-3l1.66.43a4.23 4.23 0 0 0-.08-3.72zm-16.08-1.36a5.3 5.3 0 0 0-2.85-2.43c1-.07 2-.11 3.59-.11s2.58 0 3.59.11a5.3 5.3 0 0 0-2.85 2.43z'></path></svg>"
        ]
     ],
-    "mustache":[
+    "facialHairMustache":[
        [
           "<svg alt='row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='24.51' r='14.85' fill='#fff' stroke='#bfbfbf' stroke-width='2.48'></circle></svg>",
           "<svg alt='row 1 column 2' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='24.51' r='14.85' fill='#fff' stroke='#bfbfbf' stroke-width='2.48'></circle><path d='M21.65 25.54a8.07 8.07 0 0 0-2.78 5l2.32-1 1 1.87 1.9-1.56 1.88 2V24.1a7.39 7.39 0 0 0-4.32 1.44zm8.7 0A7.39 7.39 0 0 0 26 24.1v7.72l1.88-2 1.9 1.56 1-1.87 2.32 1a8.07 8.07 0 0 0-2.75-4.97z'></path></svg>",
@@ -741,7 +741,7 @@
           "<svg alt='row 2 column 3' width='45' height='45' viewBox='0 0 52 52'><circle cx='26' cy='24.51' r='14.85' fill='#fff' stroke='#bfbfbf' stroke-width='2.48'></circle><path d='M26 31.57a40.23 40.23 0 0 1-4.61-.27 11.76 11.76 0 0 0 2.94 4.21L26 34.08l1.67 1.43a11.76 11.76 0 0 0 2.94-4.21 40.23 40.23 0 0 1-4.61.27z'></path></svg>"
        ]
     ],
-    "beard":[
+    "facialHairBeard":[
        [
           "<svg alt='row 1 column 1' width='45' height='45' viewBox='0 0 52 52'><path d='M40.85 24.51A14.85 14.85 0 1 1 26 9.66a14.85 14.85 0 0 1 14.85 14.85z' fill='#fff' stroke='#bfbfbf' stroke-width='2.48'></path></svg>",
           "<svg alt='row 1 column 2' width='45' height='45' viewBox='0 0 52 52'><path d='M40.85 24.51A14.85 14.85 0 1 1 26 9.66a14.85 14.85 0 0 1 14.85 14.85z' fill='#fff' stroke='#bfbfbf' stroke-width='2.48'></path><path d='M26 34.9l2.72-2.34 1.2 2.34.94 4.78a13.6 13.6 0 0 1-4.86.82 13.6 13.6 0 0 1-4.86-.82l.94-4.78 1.2-2.34z'></path></svg>",

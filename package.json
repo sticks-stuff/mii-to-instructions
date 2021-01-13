@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "file-to-array-buffer": "^1.0.0",
-    "kaitai-struct": "^0.9.0"
+    "kaitai-struct": "^0.9.0",
+    "number-to-words": "^1.2.4"
   },
   "devDependencies": {},
   "scripts": {
