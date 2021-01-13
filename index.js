@@ -72,3 +72,4 @@ console.log(getEyeRotation('0x' + pad(parsedNina.eyeType.toString(16), 2)));
 // console.log('0x' + pad(parsedNina.eyebrowType.toString(16), 2));
 // console.log(getStringLocation(parsedrotation.eyebrows, "0x01"));
 // console.log(parsedrotation.eyebrows[0].length);
+
