@@ -114,7 +114,7 @@ function generateInstructions(file) {
     if(toHex(parsedFile.hairType) != "0x1e"){
         hair += addInstructionPage("hairType", parsedFile, defaultFile, "hairCount");
         hair += addInstructionColor("hairColor", parsedFile, defaultFile, "hairCount");
-        hair += addInstruction("hairFlip", parsedFile, defaultFile, "hairCount");
+        // hair += addInstruction("hairFlip", parsedFile, defaultFile, "hairCount");
         if(global.hairCount > 0){hair = "<tr><th valign='top' align='right' rowspan='" + global.hairCount + "' style='font-size:20'>Hair</th>" + hair;}
     }
 
@@ -147,9 +147,11 @@ function generateInstructions(file) {
     if(global.noseCount > 0){nose = "<tr><th valign='top' align='right' rowspan='" + global.noseCount + "' style='font-size:20'>Nose</th>" + nose;}
 
     var facialHair = "";
-    facialHair += addInstructionColor("facialHairColor", parsedFile, defaultFile, "facialHairCount");
     facialHair += addInstruction("facialHairBeard", parsedFile, defaultFile, "facialHairCount");
     facialHair += addInstruction("facialHairMustache", parsedFile, defaultFile, "facialHairCount");
+    if(parsedFile.facialHairMustache != 0 || parsedFile.facialHairBeard != 0) {
+        facialHair += addInstructionColor("facialHairColor", parsedFile, defaultFile, "facialHairCount");
+    }
     if(parsedFile.facialHairMustache != 0) {
         facialHair += addInstructionNumber("facialHairVertical", parsedFile, defaultFile, "move up", "move down", "facialHairCount");
         facialHair += addInstructionNumber("facialHairSize", parsedFile, defaultFile, "smaller", "larger", "facialHairCount");
@@ -203,26 +205,10 @@ function generateInstructions(file) {
 }
 
 function addInstruction (attrbute, parsedFile, defaultFile, counter) {
-    var output = "";
-    if(parsedFile[attrbute] != defaultFile[attrbute]) {
-        var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
-        output += "<td class='icon'>";
-        output += icons[attrbute][location.row - 1][location.column - 1];
-        output += "</td><td>";
-        output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
-        output += converter.toOrdinal(location.row) + " row, ";
-        output += converter.toOrdinal(location.column) + " column";
-        output += "</td></tr>\n";
-        global[counter] = global[counter] + 1;
-    }
-    return output;
-}
-
-function addInstructionColor (attrbute, parsedFile, defaultFile, counter) {
-    var output = "";
-    if(parsedFile[attrbute] != defaultFile[attrbute]) {
-        var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
-        if(location != undefined) {
+    try {
+        var output = "";
+        if(parsedFile[attrbute] != defaultFile[attrbute]) {
+            var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
             output += "<td class='icon'>";
             output += icons[attrbute][location.row - 1][location.column - 1];
             output += "</td><td>";
@@ -231,79 +217,116 @@ function addInstructionColor (attrbute, parsedFile, defaultFile, counter) {
             output += converter.toOrdinal(location.column) + " column";
             output += "</td></tr>\n";
             global[counter] = global[counter] + 1;
-        } else {
-            var locationCustom = getStringLocation(map.customColors[0], toHex(parsedFile[attrbute]));
-            output += "<td class='icon'>";
-            output += icons.customColors[locationCustom.row - 1][locationCustom.column - 1];
-            output += "</td><td>";
-            output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
-            output += " Custom colors, ";
-            output += converter.toOrdinal(locationCustom.row) + " row, ";
-            output += converter.toOrdinal(locationCustom.column) + " column";
-            output += "</td></tr>\n";
-            global[counter] = global[counter] + 1;
         }
+        return output;
+    } catch (err) {
+        console.error("Panic at " + attrbute);
     }
-    return output;
+}
+
+function addInstructionColor (attrbute, parsedFile, defaultFile, counter) {
+    try {
+        var output = "";
+        if(parsedFile[attrbute] != defaultFile[attrbute]) {
+            var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
+            if(location != undefined) {
+                output += "<td class='icon'>";
+                output += icons[attrbute][location.row - 1][location.column - 1];
+                output += "</td><td>";
+                output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
+                output += converter.toOrdinal(location.row) + " row, ";
+                output += converter.toOrdinal(location.column) + " column";
+                output += "</td></tr>\n";
+                global[counter] = global[counter] + 1;
+            } else {
+                var locationCustom = getStringLocation(map.customColors[0], toHex(parsedFile[attrbute]));
+                output += "<td class='icon'>";
+                output += icons.customColors[locationCustom.row - 1][locationCustom.column - 1];
+                output += "</td><td>";
+                output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
+                output += " Custom colors, ";
+                output += converter.toOrdinal(locationCustom.row) + " row, ";
+                output += converter.toOrdinal(locationCustom.column) + " column";
+                output += "</td></tr>\n";
+                global[counter] = global[counter] + 1;
+            }
+        }
+        return output;
+    } catch (err) {
+        console.error("Panic at " + attrbute);
+    }
 }
 
 function addInstructionPage (attrbute, parsedFile, defaultFile, counter) {
-    var output = "";
-    if(parsedFile[attrbute] != defaultFile[attrbute]) {
-        var location = getStringLocation(map[attrbute], toHex(parsedFile[attrbute]));
-        output += "<td class='icon'>";
-        output += icons[attrbute][location.page - 1][location.row - 1][location.column - 1];
-        output += "</td><td>";
-        output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
-        output += converter.toOrdinal(location.page) + " page, ";
-        output += converter.toOrdinal(location.row) + " row, ";
-        output += converter.toOrdinal(location.column) + " column";
-        output += "</td></tr>\n";
-        global[counter] = global[counter] + 1;
+    try {
+        var output = "";
+        if(parsedFile[attrbute] != defaultFile[attrbute]) {
+            var location = getStringLocation(map[attrbute], toHex(parsedFile[attrbute]));
+            output += "<td class='icon'>";
+            output += icons[attrbute][location.page - 1][location.row - 1][location.column - 1];
+            output += "</td><td>";
+            output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
+            output += converter.toOrdinal(location.page) + " page, ";
+            output += converter.toOrdinal(location.row) + " row, ";
+            output += converter.toOrdinal(location.column) + " column";
+            output += "</td></tr>\n";
+            global[counter] = global[counter] + 1;
+        }
+        return output;
+    } catch (err) {
+        console.error("Panic at " + attrbute);
     }
-    return output;
 }
 
 function addInstructionNumber (attrbute, parsedFile, defaultFile, moreText, lessText, counter) {
-    var output = "";
-    if(parsedFile[attrbute] != defaultFile[attrbute]) {
-        var difference = defaultFile[attrbute] - parsedFile[attrbute];
-        if(difference < 0) {
-            output += "<td class='icon'>";
-            output += icons["menu parts"][lessText];
-            output += "</td><td>";
-            output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + lessText.replace('move ','');
-        } else {
-            output += "<td class='icon'>";
-            output += icons["menu parts"][moreText];
-            output += "</td><td>";
-            output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + moreText.replace('move ','');
+    try {
+        var output = "";
+        if(parsedFile[attrbute] != defaultFile[attrbute]) {
+            var difference = defaultFile[attrbute] - parsedFile[attrbute];
+            if(difference < 0) {
+                output += "<td class='icon'>";
+                output += icons["menu parts"][lessText];
+                output += "</td><td>";
+                output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + lessText.replace('move ','');
+            } else {
+                output += "<td class='icon'>";
+                output += icons["menu parts"][moreText];
+                output += "</td><td>";
+                output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + moreText.replace('move ','');
+            }
+            global[counter] = global[counter] + 1;
+            output += "</td></tr>\n";
         }
-        global[counter] = global[counter] + 1;
-        output += "</td></tr>\n";
+        return output;
+    } catch (err) {
+        console.error("Panic at " + attrbute);
     }
-    return output;
 }
 
 function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, lessText, defaultRotate, counter) {
-    var output = "";
-    if(parsedFile[attrbute] != defaultRotate) {
-        var difference = defaultRotate - parsedFile[attrbute];
-        if(difference < 0) {
-            output += "<td class='icon'>";
-            output += icons["menu parts"][lessText];
-            output += "</td><td>";
-            output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + lessText.replace('rotate ','');
-        } else {
-            output += "<td class='icon'>";
-            output += icons["menu parts"][moreText];
-            output += "</td><td>";
-            output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + moreText.replace('rotate ','');
+    try {
+        var output = "";
+        if(parsedFile[attrbute] != defaultRotate) {
+            var difference = defaultRotate - parsedFile[attrbute];
+            if(difference < 0) {
+                output += "<td class='icon'>";
+                output += icons["menu parts"][lessText];
+                output += "</td><td>";
+                output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + lessText.replace('rotate ','');
+            } else {
+                output += "<td class='icon'>";
+                output += icons["menu parts"][moreText];
+                output += "</td><td>";
+                output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + moreText.replace('rotate ','');
+            }
+            global[counter] = global[counter] + 1;
+            output += "</td></tr>\n";
         }
-        global[counter] = global[counter] + 1;
-        output += "</td></tr>\n";
+        return output;
+    } catch (err) {
+        console.error("Panic at " + attrbute);
     }
-    return output;
+
 }
 
 var myArgs = process.argv.slice(2);
@@ -311,18 +334,30 @@ console.log(generateInstructions(myArgs[0]));
 // console.log(parsedNina.eyebrowVertical);
 // console.log(parsedDefaultF.eyebrowVertical);
 
-// const parsedFile = new ufsd(new KaitaiStream(fs.readFileSync("MarioBroth.ufsd")));
+// const parsedFile = new ufsd(new KaitaiStream(fs.readFileSync(myArgs[0])));
 // const defaultFile = new ufsd(new KaitaiStream(fs.readFileSync("defaultF.ufsd")));
 
 // var output = "";
-// var attrbute = "hairColor";
-// console.log(map.favoriteColor);
+// var attrbute = "facialHairColor";
+// console.log(map[attrbute]);
 // console.log(toHex(parsedFile[attrbute]));
 // console.log(parsedFile.bodyHeight);
 // console.log(icons[attrbute][0][3]);
 
 // console.log(Array.isArray(map[attrbute][0][0]));
-// console.log(getStringLocation(map[attrbute], toHex(parsedFile[attrbute])));
+// console.log(addInstructionColor(map[attrbute], parsedFile));
+// console.log(addInstructionColor("facialHairColor", parsedFile, defaultFile, "facialHairCount"));
+// console.log(getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute])));
+// var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
+// output += "<td class='icon'>";
+// output += icons[attrbute][location.row - 1][location.column - 1];
+// output += "</td><td>";
+// output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
+// output += converter.toOrdinal(location.row) + " row, ";
+// output += converter.toOrdinal(location.column) + " column";
+// output += "</td></tr>\n";
+// console.log(output);
+// global[counter] = global[counter] + 1;
 // if(parsedFile[attrbute] != defaultFile[attrbute]) {
 //     var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
 //     output += "<td class='icon'>";
