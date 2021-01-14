@@ -43,6 +43,20 @@
           "<svg alt='default row 2 column 4' width='45' height='45'><rect width='45' height='45' style='fill:rgb(208, 160, 74)'/></svg>"
        ]
     ],
+    "facialHairColor":[
+       [
+          "<svg alt='default row 1 column 1' width='45' height='45'><rect width='45' height='45' style='fill:rgb(0, 0, 0)'/></svg>",
+          "<svg alt='default row 1 column 2' width='45' height='45'><rect width='45' height='45' style='fill:rgb(64, 32, 16)'/></svg>",
+          "<svg alt='default row 1 column 3' width='45' height='45'><rect width='45' height='45' style='fill:rgb(92, 24, 10)'/></svg>",
+          "<svg alt='default row 1 column 4' width='45' height='45'><rect width='45' height='45' style='fill:rgb(124, 58, 20)'/></svg>"
+       ],
+       [
+          "<svg alt='default row 2 column 1' width='45' height='45'><rect width='45' height='45' style='fill:rgb(120, 120, 128)'/></svg>",
+          "<svg alt='default row 2 column 2' width='45' height='45'><rect width='45' height='45' style='fill:rgb(78, 62, 16)'/></svg>",
+          "<svg alt='default row 2 column 3' width='45' height='45'><rect width='45' height='45' style='fill:rgb(136, 88, 24)'/></svg>",
+          "<svg alt='default row 2 column 4' width='45' height='45'><rect width='45' height='45' style='fill:rgb(208, 160, 74)'/></svg>"
+       ]
+    ],
     "eyeColor":[
        [
           "<svg alt='default row 1 column 1' width='45' height='45'><rect width='45' height='45' style='fill:rgb(0, 0, 0)'/></svg>",
