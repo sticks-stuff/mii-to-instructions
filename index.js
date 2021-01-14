@@ -187,12 +187,36 @@ function generateInstructions(file) {
     var end = "";
     if(parsedFile.bodyHeight != defaultFile.bodyHeight) {
         end += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Height</th>";
-        end += addInstructionNumber("bodyHeight", parsedFile, defaultFile, "height", "height");   
+        var differencebodyHeight = defaultFile.bodyHeight - parsedFile.bodyHeight;
+        if(differencebodyHeight < 0) {
+            end += "<td class='icon'>";
+            end += icons["menu parts"].height;
+            end += "</td><td>";
+            end += parsedFile.bodyHeight + "/127 (" + Math.abs(differencebodyHeight) + " clicks left)";
+        } else {
+            end += "<td class='icon'>";
+            end += icons["menu parts"].height;
+            end += "</td><td>";
+            end += parsedFile.bodyHeight + "/127 (" + Math.abs(differencebodyHeight) + " clicks right)";
+        }
+        end += "</td></tr>\n";
     }
 
     if(parsedFile.bodyWeight != defaultFile.bodyWeight) {
         end += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Build</th>";
-        end += addInstructionNumber("bodyWeight", parsedFile, defaultFile, "weight", "weight");
+        var differencebodyWeight = defaultFile.bodyWeight - parsedFile.bodyWeight;
+        if(differencebodyWeight < 0) {
+            end += "<td class='icon'>";
+            end += icons["menu parts"].weight;
+            end += "</td><td>";
+            end += parsedFile.bodyWeight + "/127 (" + Math.abs(differencebodyWeight) + " clicks left)";
+        } else {
+            end += "<td class='icon'>";
+            end += icons["menu parts"].weight;
+            end += "</td><td>";
+            end += parsedFile.bodyWeight + "/127 (" + Math.abs(differencebodyWeight) + " clicks right)";
+        }
+        end += "</td></tr>\n";
     }
 
     if(parsedFile.favoriteColor != defaultFile.favoriteColor) {
