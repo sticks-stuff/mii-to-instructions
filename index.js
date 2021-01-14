@@ -50,7 +50,7 @@ function getEyebrowRotation(eyebrowType) {
 }
 
 function getEyeRotation(eyeType) {
-    return getStringLocation(parsedrotation.eyes, eyeType).row + 2;
+    return getStringLocation(parsedrotation.eyes, eyeType).row + 1;
 }
 
 function toHex(int) {
@@ -182,14 +182,21 @@ function generateInstructions(file) {
     mouth += addInstructionNumber("mouthStretch", parsedFile, defaultFile, "flatter", "wider", "mouthCount");
     if(global.mouthCount > 0){mouth = "<tr><th valign='top' align='right' rowspan='" + global.mouthCount + "' style='font-size:20'>Mouth</th>" + mouth;}
 
-    var end = "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Height</th>";
-    end += addInstructionNumber("bodyHeight", parsedFile, defaultFile, "height", "height");   
+    var end = "";
+    if(parsedFile.bodyHeight != defaultFile.bodyHeight) {
+        end += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Height</th>";
+        end += addInstructionNumber("bodyHeight", parsedFile, defaultFile, "height", "height");   
+    }
 
-    end += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Build</th>";
-    end += addInstructionNumber("bodyWeight", parsedFile, defaultFile, "weight", "weight");
+    if(parsedFile.bodyWeight != defaultFile.bodyWeight) {
+        end += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Build</th>";
+        end += addInstructionNumber("bodyWeight", parsedFile, defaultFile, "weight", "weight");
+    }
 
-    end += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Favorite Color</th>";
-    end += addInstruction("favoriteColor", parsedFile, defaultFile);
+    if(parsedFile.favoriteColor != defaultFile.favoriteColor) {
+        end += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Favorite Color</th>";
+        end += addInstruction("favoriteColor", parsedFile, defaultFile);
+    }
 
     end += "</tbody></table>\n</div>";
     return head + face + hair + eyebrows + eyes + nose + mouth + end;
@@ -202,7 +209,7 @@ function addInstruction (attrbute, parsedFile, defaultFile, counter) {
         output += "<td class='icon'>";
         output += icons[attrbute][location.row - 1][location.column - 1];
         output += "</td><td>";
-        output += attrbute + ": ";
+        output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
         output += converter.toOrdinal(location.row) + " row, ";
         output += converter.toOrdinal(location.column) + " column";
         output += "</td></tr>\n";
@@ -219,7 +226,7 @@ function addInstructionColor (attrbute, parsedFile, defaultFile, counter) {
             output += "<td class='icon'>";
             output += icons[attrbute][location.row - 1][location.column - 1];
             output += "</td><td>";
-            output += attrbute + ": ";
+            output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
             output += converter.toOrdinal(location.row) + " row, ";
             output += converter.toOrdinal(location.column) + " column";
             output += "</td></tr>\n";
@@ -229,7 +236,7 @@ function addInstructionColor (attrbute, parsedFile, defaultFile, counter) {
             output += "<td class='icon'>";
             output += icons.customColors[locationCustom.row - 1][locationCustom.column - 1];
             output += "</td><td>";
-            output += attrbute + ": ";
+            output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
             output += " Custom colors, ";
             output += converter.toOrdinal(locationCustom.row) + " row, ";
             output += converter.toOrdinal(locationCustom.column) + " column";
@@ -247,7 +254,7 @@ function addInstructionPage (attrbute, parsedFile, defaultFile, counter) {
         output += "<td class='icon'>";
         output += icons[attrbute][location.page - 1][location.row - 1][location.column - 1];
         output += "</td><td>";
-        output += attrbute + ": ";
+        output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
         output += converter.toOrdinal(location.page) + " page, ";
         output += converter.toOrdinal(location.row) + " row, ";
         output += converter.toOrdinal(location.column) + " column";
@@ -265,12 +272,12 @@ function addInstructionNumber (attrbute, parsedFile, defaultFile, moreText, less
             output += "<td class='icon'>";
             output += icons["menu parts"][lessText];
             output += "</td><td>";
-            output += attrbute + ": " + difference + " " + lessText;
+            output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + lessText.replace('move ','');
         } else {
             output += "<td class='icon'>";
             output += icons["menu parts"][moreText];
             output += "</td><td>";
-            output += attrbute + ": " + difference + " " + moreText;
+            output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + moreText.replace('move ','');
         }
         global[counter] = global[counter] + 1;
         output += "</td></tr>\n";
@@ -286,12 +293,12 @@ function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, le
             output += "<td class='icon'>";
             output += icons["menu parts"][lessText];
             output += "</td><td>";
-            output += attrbute + ": " + difference + " " + lessText;
+            output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + lessText.replace('rotate ','');
         } else {
             output += "<td class='icon'>";
             output += icons["menu parts"][moreText];
             output += "</td><td>";
-            output += attrbute + ": " + difference + " " + moreText;
+            output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + moreText.replace('rotate ','');
         }
         global[counter] = global[counter] + 1;
         output += "</td></tr>\n";
@@ -299,18 +306,19 @@ function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, le
     return output;
 }
 
-console.log(generateInstructions("MarioBroth.ufsd"));
+var myArgs = process.argv.slice(2);
+console.log(generateInstructions(myArgs[0]));
 // console.log(parsedNina.eyebrowVertical);
 // console.log(parsedDefaultF.eyebrowVertical);
 
-const parsedFile = new ufsd(new KaitaiStream(fs.readFileSync("MarioBroth.ufsd")));
+// const parsedFile = new ufsd(new KaitaiStream(fs.readFileSync("MarioBroth.ufsd")));
 // const defaultFile = new ufsd(new KaitaiStream(fs.readFileSync("defaultF.ufsd")));
 
 // var output = "";
 // var attrbute = "hairColor";
 // console.log(map.favoriteColor);
 // console.log(toHex(parsedFile[attrbute]));
-console.log(parsedFile.bodyHeight);
+// console.log(parsedFile.bodyHeight);
 // console.log(icons[attrbute][0][3]);
 
 // console.log(Array.isArray(map[attrbute][0][0]));
