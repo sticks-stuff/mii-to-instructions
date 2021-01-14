@@ -39,7 +39,6 @@ const rotation = fs.readFileSync("rotation.json");
 const parsedrotation = JSON.parse(rotation);
 
 const icons = JSON.parse(fs.readFileSync("icons.json"));
-// console.log(icons.faceType);
 
 function getEyebrowRotation(eyebrowType) {
     if (eyebrowType === '0x17') {
@@ -59,26 +58,14 @@ function toHex(int) {
 
 const defaultM = fs.readFileSync("defaultM.ufsd");
 const parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
-// console.log(parsedDefaultM);
 
 const defaultF = fs.readFileSync("defaultF.ufsd");
 const parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
-// console.log(parsedDefaultF);
 
 const nina = fs.readFileSync("Nina.ufsd");
 const parsedNina = new ufsd(new KaitaiStream(nina));
-// console.log(parsedNina);
-// console.log(parsedNina.eyebrowType.toString(16));
 
 const map = JSON.parse(fs.readFileSync("maps_Switch.json"));
-
-// console.log(parsedmap.hair[0][0][0]);
-// console.log(getStringLocation(parsedmap.eyebrows, '0x' + pad(parsedNina.eyebrowType.toString(16), 2)));
-// console.log(getEyebrowRotation('0x' + pad(parsedNina.eyebrowType.toString(16), 2)));
-// console.log(getEyeRotation(toHex(parsedNina.eyeType)));
-// console.log('0x' + pad(parsedNina.eyebrowType.toString(16), 2));
-// console.log(getStringLocation(parsedrotation.eyebrows, "0x01"));
-// console.log(parsedrotation.eyebrows[0].length);
 
 let global = {};
 global.hairCount = 0;
@@ -355,41 +342,3 @@ function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, le
 
 var myArgs = process.argv.slice(2);
 console.log(generateInstructions(myArgs[0]));
-// console.log(parsedNina.eyebrowVertical);
-// console.log(parsedDefaultF.eyebrowVertical);
-
-// const parsedFile = new ufsd(new KaitaiStream(fs.readFileSync(myArgs[0])));
-// const defaultFile = new ufsd(new KaitaiStream(fs.readFileSync("defaultF.ufsd")));
-
-// var output = "";
-// var attrbute = "facialHairColor";
-// console.log(map[attrbute]);
-// console.log(toHex(parsedFile[attrbute]));
-// console.log(parsedFile.bodyHeight);
-// console.log(icons[attrbute][0][3]);
-
-// console.log(Array.isArray(map[attrbute][0][0]));
-// console.log(addInstructionColor(map[attrbute], parsedFile));
-// console.log(addInstructionColor("facialHairColor", parsedFile, defaultFile, "facialHairCount"));
-// console.log(getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute])));
-// var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
-// output += "<td class='icon'>";
-// output += icons[attrbute][location.row - 1][location.column - 1];
-// output += "</td><td>";
-// output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
-// output += converter.toOrdinal(location.row) + " row, ";
-// output += converter.toOrdinal(location.column) + " column";
-// output += "</td></tr>\n";
-// console.log(output);
-// global[counter] = global[counter] + 1;
-// if(parsedFile[attrbute] != defaultFile[attrbute]) {
-//     var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
-//     output += "<td class='icon'>";
-//     output += icons[attrbute][location.row][location.column];
-//     output += "</td><td>";
-//     output += attrbute + ": ";
-//     output += converter.toOrdinal(location.row) + " row, ";
-//     output += converter.toOrdinal(location.column) + " column";
-//     output += "</td></tr>\n";
-// }
-// console.log(output);
