@@ -80,75 +80,119 @@ const map = JSON.parse(fs.readFileSync("maps_Switch.json"));
 // console.log(getStringLocation(parsedrotation.eyebrows, "0x01"));
 // console.log(parsedrotation.eyebrows[0].length);
 
+let global = {};
+global.hairCount = 0;
+global.eyebrowCount = 0;
+global.eyeCount = 0;
+global.noseCount = 0;
+global.facialHairCount = 0;
+global.mouthCount = 0;
+global.glassesCount = 0;
+global.moleCount = 0;
+
 function generateInstructions(file) {
     const parsedFile = new ufsd(new KaitaiStream(fs.readFileSync(file)));
-    var output;
+    var head;
     if (parsedFile.gender === 0) {
         defaultFile = new ufsd(new KaitaiStream(fs.readFileSync("defaultM.ufsd")));
-        output = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/KKyM2gf/male.png' alt='male' width='45' height='45' class='icon'></td><td>Male</td></tr>\n";  
+        head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/KKyM2gf/male.png' alt='male' width='45' height='45' class='icon'></td><td>Male</td></tr>\n";  
     } else {
         defaultFile = new ufsd(new KaitaiStream(fs.readFileSync("defaultF.ufsd")));
-        output = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/tmz1Qw3/female.png' alt='female' width='45' height='45' class='icon'></td><td>Female</td></tr>\n";  
+        head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/tmz1Qw3/female.png' alt='female' width='45' height='45' class='icon'></td><td>Female</td></tr>\n";  
+    }
+    head += "<tbody><tr><th valign='top' align='right' style='font-size:20'>Face</th>";
+    head += addInstruction("faceType", parsedFile, defaultFile);
+    head += addInstruction("faceColor", parsedFile, defaultFile);
+    head += addInstruction("faceWrinkles", parsedFile, defaultFile);
+    head += addInstruction("faceMakeup", parsedFile, defaultFile);
+    head += "</tbody>";
+
+    var hair = "";
+    if(toHex(parsedFile.hairType) != "0x1e"){
+        hair += addInstructionPage("hairType", parsedFile, defaultFile, "hairCount");
+        hair += addInstruction("hairColor", parsedFile, defaultFile, "hairCount");
+        hair += addInstruction("hairFlip", parsedFile, defaultFile, "hairCount");
+        if(global.hairCount > 0){hair = "<tr><th valign='top' align='right' rowspan='" + global.hairCount + "' style='font-size:20'>Hair</th>" + hair;}
     }
 
-    output += "<tbody><tr><th valign='top' align='right' style='font-size:20'>Face</th>";
-    output += addInstruction("faceType", parsedFile, defaultFile);
-    output += addInstruction("faceColor", parsedFile, defaultFile);
-    output += addInstruction("faceWrinkles", parsedFile, defaultFile);
-    output += addInstruction("faceMakeup", parsedFile, defaultFile);
-    output += "</tr>\n";
+    var eyebrows = "";
+    if(toHex(parsedFile.hairType) != "0x17"){
+        eyebrows += addInstruction("eyebrowType", parsedFile, defaultFile, "eyebrowCount");
+        eyebrows += addInstruction("eyebrowColor", parsedFile, defaultFile, "eyebrowCount");
+        eyebrows += addInstructionNumber("eyebrowVertical", parsedFile, defaultFile, "move up", "move down", "eyebrowCount");
+        eyebrows += addInstructionNumber("eyebrowHorizontal", parsedFile, defaultFile, "closer", "father", "eyebrowCount");
+        eyebrows += addInstructionRotation("eyebrowRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyebrowRotation(toHex(parsedFile.eyebrowRotation)), "eyebrowCount");
+        eyebrows += addInstructionNumber("eyebrowSize", parsedFile, defaultFile, "larger", "smaller", "eyebrowCount");
+        eyebrows += addInstructionNumber("eyebrowStretch", parsedFile, defaultFile, "wider", "flatter", "eyebrowCount");
+        if(global.eyebrowCount > 0){eyebrows = "<tr><th valign='top' align='right' rowspan='" + global.eyebrowCount + "' style='font-size:20'>Eyebrows</th>" + eyebrows;}
+    }
 
+    var eyes = "";
+    eyes += addInstructionPage("eyeType", parsedFile, defaultFile, "eyeCount");
+    eyes += addInstruction("eyeColor", parsedFile, defaultFile, "eyeCount");
+    eyes += addInstructionNumber("eyeVertical", parsedFile, defaultFile, "move up", "move down", "eyeCount");
+    eyes += addInstructionNumber("eyeHorizontal", parsedFile, defaultFile, "closer", "father", "eyeCount");
+    eyes += addInstructionRotation("eyeRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyeRotation(toHex(parsedFile.eyeRotation)), "eyeCount");
+    eyes += addInstructionNumber("eyeSize", parsedFile, defaultFile, "smaller", "larger", "eyeCount");
+    eyes += addInstructionNumber("eyeStretch", parsedFile, defaultFile, "flatter", "wider", "eyeCount");
+    if(global.eyeCount > 0){eyes = "<tr><th valign='top' align='right' rowspan='" + global.eyeCount + "' style='font-size:20'>Eyes</th>" + eyes;}
 
-    output += "<tr><th valign='top' align='right' rowspan='2' style='font-size:20'>Hair</th>";
-    output += addInstructionPage("hairType", parsedFile, defaultFile);
-    output += addInstruction("hairColor", parsedFile, defaultFile);
-    output += addInstruction("hairFlip", parsedFile, defaultFile);
-    output += "</tr>\n";
+    var nose = "";
+    nose += addInstruction("noseType", parsedFile, defaultFile, "noseCount");
+    nose += addInstructionNumber("noseVertical", parsedFile, defaultFile, "move up", "move down", "noseCount");
+    nose += addInstructionNumber("noseSize", parsedFile, defaultFile, "smaller", "larger", "noseCount");
+    if(global.noseCount > 0){nose = "<tr><th valign='top' align='right' rowspan='" + global.noseCount + "' style='font-size:20'>Nose</th>" + nose;}
 
-    output += "<tr><th valign='top' align='right' rowspan='5' style='font-size:20'>Eyebrows</th>";
-    output += addInstructionNumber("eyebrowVertical", parsedFile, defaultFile, "move up", "move down");
-    output += addInstructionNumber("eyebrowHorizontal", parsedFile, defaultFile, "closer", "father");
-    output += addInstructionRotation("eyebrowRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyebrowRotation(toHex(parsedFile.eyebrowRotation)));
-    output += addInstructionNumber("eyebrowSize", parsedFile, defaultFile, "larger", "smaller");
-    output += addInstructionNumber("eyebrowStretch", parsedFile, defaultFile, "wider", "flatter");
-    output += "</tr>\n";
+    var facialHair = "";
+    facialHair += addInstruction("facialHairColor", parsedFile, defaultFile, "facialHairCount");
+    facialHair += addInstruction("facialHairBeard", parsedFile, defaultFile, "facialHairCount");
+    facialHair += addInstruction("facialHairMustache", parsedFile, defaultFile, "facialHairCount");
+    if(parsedFile.facialHairMustache != 0) {
+        facialHair += addInstructionNumber("facialHairVertical", parsedFile, defaultFile, "move up", "move down", "facialHairCount");
+        facialHair += addInstructionNumber("facialHairSize", parsedFile, defaultFile, "smaller", "larger", "facialHairCount");
+    }
+    if(global.facialHairCount > 0){facialHair = "<tr><th valign='top' align='right' rowspan='" + global.facialHairCount + "' style='font-size:20'>Facial Hair</th>" + facialHair;}
 
-    output += "<tr><th valign='top' align='right' rowspan='6' style='font-size:20'>Eyes</th>";
-    output += addInstructionPage("eyeType", parsedFile, defaultFile);
-    output += addInstruction("eyeColor", parsedFile, defaultFile);
-    output += addInstructionNumber("eyeHorizontal", parsedFile, defaultFile, "closer", "father");
-    output += addInstructionRotation("eyeRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyeRotation(toHex(parsedFile.eyeRotation)));
-    output += addInstructionNumber("eyeSize", parsedFile, defaultFile, "smaller", "larger");
-    output += addInstructionNumber("eyeStretch", parsedFile, defaultFile, "flatter", "wider");
-    output += "</tr>\n";
+    if(parsedFile.glassesType != 0) {
+        var glasses = "";
+        glasses += addInstruction("glassesType", parsedFile, defaultFile, "glassesCount");
+        glasses += addInstruction("glassesColor", parsedFile, defaultFile, "glassesCount");
+        glasses += addInstructionNumber("glassesVertical", parsedFile, defaultFile, "move up", "move down", "glassesCount");
+        glasses += addInstructionNumber("glassesSize", parsedFile, defaultFile, "smaller", "larger", "glassesCount");
+        if(global.glassesCount > 0){glasses = "<tr><th valign='top' align='right' rowspan='" + global.glassesCount + "' style='font-size:20'>Glasses</th>" + glasses;}
+    }
 
-    output += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Nose</th>";
-    output += addInstruction("noseType", parsedFile, defaultFile);
-    output += "</tr>\n";
+    if(parsedFile.moleEnable === 1) {
+        var mole = "";
+        mole += addInstruction("moleEnable", parsedFile, defaultFile, "moleCount");
+        mole += addInstructionNumber("moleHorizontal", parsedFile, defaultFile, "closer", "father", "moleCount");
+        mole += addInstructionNumber("moleVertical", parsedFile, defaultFile, "move up", "move down", "moleCount");
+        mole += addInstructionNumber("moleSize", parsedFile, defaultFile, "smaller", "larger", "moleCount");
+        if(global.moleCount > 0){mole = "<tr><th valign='top' align='right' rowspan='" + global.moleCount + "' style='font-size:20'>Mole</th>" + mole;}
+    }
 
-    output += "<tr><th valign='top' align='right' rowspan='3' style='font-size:20'>Mouth</th>";
-    output += addInstruction("mouthType", parsedFile, defaultFile);
-    // output += addInstruction("mouthColor", parsedFile, defaultFile);
-    output += addInstructionNumber("mouthSize", parsedFile, defaultFile, "smaller", "larger");
-    output += addInstructionNumber("mouthStretch", parsedFile, defaultFile, "flatter", "wider");
-    output += "</tr>\n";
+    mouth = "";
+    mouth += addInstruction("mouthType", parsedFile, defaultFile, "mouthCount");
+    mouth += addInstruction("mouthColor", parsedFile, defaultFile, "mouthCount");
+    mouth += addInstructionNumber("mouthVertical", parsedFile, defaultFile, "move up", "move down", "mouthCount");
+    mouth += addInstructionNumber("mouthSize", parsedFile, defaultFile, "smaller", "larger", "mouthCount");
+    mouth += addInstructionNumber("mouthStretch", parsedFile, defaultFile, "flatter", "wider", "mouthCount");
+    if(global.mouthCount > 0){mouth = "<tr><th valign='top' align='right' rowspan='" + global.mouthCount + "' style='font-size:20'>Mouth</th>" + mouth;}
 
-    output += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Height</th>";
-    output += addInstructionNumber("bodyHeight", parsedFile, defaultFile, "height", "height");   
-    output += "</tr>\n";
+    var end = "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Height</th>";
+    end += addInstructionNumber("bodyHeight", parsedFile, defaultFile, "height", "height");   
 
-    output += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Build</th>";
-    output += addInstructionNumber("bodyWeight", parsedFile, defaultFile, "weight", "weight");
-    output += "</tr>\n";
+    end += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Build</th>";
+    end += addInstructionNumber("bodyWeight", parsedFile, defaultFile, "weight", "weight");
 
-    output += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Favorite Color</th>";
-    output += addInstruction("favoriteColor", parsedFile, defaultFile);
+    end += "<tr><th valign='top' align='right' rowspan='1' style='font-size:20'>Favorite Color</th>";
+    end += addInstruction("favoriteColor", parsedFile, defaultFile);
 
-    output += "</tbody></table>\n</div>";
-    return output;
+    end += "</tbody></table>\n</div>";
+    return head + hair + eyebrows + eyes + nose + mouth + end;
 }
 
-function addInstruction (attrbute, parsedFile, defaultFile) {
+function addInstruction (attrbute, parsedFile, defaultFile, counter) {
     var output = "";
     if(parsedFile[attrbute] != defaultFile[attrbute]) {
         var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
@@ -159,11 +203,12 @@ function addInstruction (attrbute, parsedFile, defaultFile) {
         output += converter.toOrdinal(location.row) + " row, ";
         output += converter.toOrdinal(location.column) + " column";
         output += "</td></tr>\n";
+        global[counter] = global[counter] + 1;
     }
     return output;
 }
 
-function addInstructionPage (attrbute, parsedFile, defaultFile) {
+function addInstructionPage (attrbute, parsedFile, defaultFile, counter) {
     var output = "";
     if(parsedFile[attrbute] != defaultFile[attrbute]) {
         var location = getStringLocation(map[attrbute], toHex(parsedFile[attrbute]));
@@ -175,11 +220,12 @@ function addInstructionPage (attrbute, parsedFile, defaultFile) {
         output += converter.toOrdinal(location.row) + " row, ";
         output += converter.toOrdinal(location.column) + " column";
         output += "</td></tr>\n";
+        global[counter] = global[counter] + 1;
     }
     return output;
 }
 
-function addInstructionNumber (attrbute, parsedFile, defaultFile, moreText, lessText) {
+function addInstructionNumber (attrbute, parsedFile, defaultFile, moreText, lessText, counter) {
     var output = "";
     if(parsedFile[attrbute] != defaultFile[attrbute]) {
         var difference = defaultFile[attrbute] - parsedFile[attrbute];
@@ -194,12 +240,13 @@ function addInstructionNumber (attrbute, parsedFile, defaultFile, moreText, less
             output += "</td><td>";
             output += attrbute + ": " + difference + " " + moreText;
         }
+        global[counter] = global[counter] + 1;
         output += "</td></tr>\n";
     }
     return output;
 }
 
-function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, lessText, defaultRotate) {
+function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, lessText, defaultRotate, counter) {
     var output = "";
     if(parsedFile[attrbute] != defaultRotate) {
         var difference = defaultRotate - parsedFile[attrbute];
@@ -214,6 +261,7 @@ function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, le
             output += "</td><td>";
             output += attrbute + ": " + difference + " " + moreText;
         }
+        global[counter] = global[counter] + 1;
         output += "</td></tr>\n";
     }
     return output;
@@ -227,21 +275,22 @@ console.log(generateInstructions("Nina.ufsd"));
 // const defaultFile = new ufsd(new KaitaiStream(fs.readFileSync("defaultF.ufsd")));
 
 // var output = "";
-// var attrbute = "favoriteColor";
-// console.log(map[attrbute]);
+// var attrbute = "mouthColor";
+// console.log(map.mouthColor);
 // console.log(toHex(parsedFile[attrbute]));
 // console.log(parsedFile[attrbute]);
+// console.log(icons[attrbute][0][3]);
 
 // console.log(Array.isArray(map[attrbute][0][0]));
-// console.log(getStringLocation(map[attrbute], toHex(parsedFile[attrbute])));
-// if(parsedFile[attrbute] != defaultFile[attrbute]) {
-//     var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
-//     output += "<td class='icon'>";
-//     output += icons[attrbute][location.row][location.column];
-//     output += "</td><td>";
-//     output += attrbute + ": ";
-//     output += converter.toOrdinal(location.row) + " row, ";
-//     output += converter.toOrdinal(location.column) + " column";
-//     output += "</td></tr>\n";
-// }
+// console.log(getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute])));
+// // if(parsedFile[attrbute] != defaultFile[attrbute]) {
+// //     var location = getStringLocation(map[attrbute][0], toHex(parsedFile[attrbute]));
+// //     output += "<td class='icon'>";
+// //     output += icons[attrbute][location.row][location.column];
+// //     output += "</td><td>";
+// //     output += attrbute + ": ";
+// //     output += converter.toOrdinal(location.row) + " row, ";
+// //     output += converter.toOrdinal(location.column) + " column";
+// //     output += "</td></tr>\n";
+// // }
 // console.log(output);
