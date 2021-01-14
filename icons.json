@@ -1,5 +1,5 @@
 {
-    "skin":[
+    "faceColor":[
        [
           "<svg alt='row 1 column 1' width='45' height='45'><rect width='45' height='45' style='fill:rgb(255, 211, 173)'/></svg>",
           "<svg alt='row 1 column 2' width='45' height='45'><rect width='45' height='45' style='fill:rgb(255, 197, 143)'/></svg>",
@@ -94,7 +94,7 @@
           "<svg alt='row 2 column 6' width='45' height='45'><rect width='45' height='45' style='fill:rgb(24, 24, 20)'/></svg>"
        ]
     ],
-    "custom-colors":[
+    "customColors":[
        [
           "<svg alt='custom row 1 column 1' width='45' height='45'><rect width='45' height='45' style='fill:rgb(92, 24, 10)'/></svg>",
           "<svg alt='custom row 1 column 2' width='45' height='45'><rect width='45' height='45' style='fill:rgb(132, 38, 38)'/></svg>",
