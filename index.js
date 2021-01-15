@@ -242,6 +242,7 @@ function addInstructionColor (attrbute, parsedFile, defaultFile, counter) {
                 output += icons[attrbute][location.row - 1][location.column - 1];
                 output += "</td><td>";
                 output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
+                output += " Default colors, ";
                 output += converter.toOrdinal(location.row) + " row, ";
                 output += converter.toOrdinal(location.column) + " column";
                 output += "</td></tr>\n";
