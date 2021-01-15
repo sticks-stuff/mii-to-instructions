@@ -110,7 +110,7 @@ function generateInstructions(file) {
         eyebrows += addInstructionNumber("eyebrowHorizontal", parsedFile, defaultFile, "closer", "father", "eyebrowCount");
         eyebrows += addInstructionRotation("eyebrowRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyebrowRotation(toHex(parsedFile.eyebrowRotation)), "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowSize", parsedFile, defaultFile, "larger", "smaller", "eyebrowCount");
-        eyebrows += addInstructionNumber("eyebrowStretch", parsedFile, defaultFile, "wider", "flatter", "eyebrowCount");
+        eyebrows += addInstructionNumber("eyebrowStretch", parsedFile, defaultFile, "flatter", "wider", "eyebrowCount");
         if(global.eyebrowCount > 0){eyebrows = "<tr><th valign='top' align='right' rowspan='" + global.eyebrowCount + "' style='font-size:20'>Eyebrows</th>" + eyebrows;}
     }
 
