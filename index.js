@@ -176,12 +176,12 @@ function generateInstructions(file) {
             end += "<td class='icon'>";
             end += icons["menu parts"].height;
             end += "</td><td>";
-            end += parsedFile.bodyHeight + "/127 (" + Math.abs(differencebodyHeight) + " clicks left)";
+            end += parsedFile.bodyHeight + "/127 (" + Math.abs(differencebodyHeight) + " clicks right)";
         } else {
             end += "<td class='icon'>";
             end += icons["menu parts"].height;
             end += "</td><td>";
-            end += parsedFile.bodyHeight + "/127 (" + Math.abs(differencebodyHeight) + " clicks right)";
+            end += parsedFile.bodyHeight + "/127 (" + Math.abs(differencebodyHeight) + " clicks left)";
         }
         end += "</td></tr>\n";
     }
