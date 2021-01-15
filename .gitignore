@@ -114,8 +114,6 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
-new.html
-test.html
-asd.html
-Nina.html
+*.html
+*.ufsd
 EXAMPLEDATA.txt
