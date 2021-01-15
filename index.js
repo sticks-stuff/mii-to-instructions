@@ -3,6 +3,25 @@ const ufsd = require("./MiidataSwi");
 const KaitaiStream = require('kaitai-struct/KaitaiStream');
 var converter = require('number-to-words');
 
+const defaultM = fs.readFileSync("defaultM.ufsd");
+const parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
+
+const defaultF = fs.readFileSync("defaultF.ufsd");
+const parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
+
+const map = JSON.parse(fs.readFileSync("maps_Switch.json"));
+
+let global = {};
+global.hairCount = 0;
+global.eyebrowCount = 0;
+global.eyeCount = 0;
+global.noseCount = 0;
+global.facialHairCount = 0;
+global.mouthCount = 0;
+global.glassesCount = 0;
+global.moleCount = 0;
+global.faceCount = 0;
+
 function getStringLocation(array, string) {
     for( var i = 0; i < array.length; i++ ) {
         for( var j = 0; j < array[i].length; j++ ) {
@@ -55,28 +74,6 @@ function getEyeRotation(eyeType) {
 function toHex(int) {
     return '0x' + pad(int.toString(16), 2);
 }
-
-const defaultM = fs.readFileSync("defaultM.ufsd");
-const parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
-
-const defaultF = fs.readFileSync("defaultF.ufsd");
-const parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
-
-const nina = fs.readFileSync("Nina.ufsd");
-const parsedNina = new ufsd(new KaitaiStream(nina));
-
-const map = JSON.parse(fs.readFileSync("maps_Switch.json"));
-
-let global = {};
-global.hairCount = 0;
-global.eyebrowCount = 0;
-global.eyeCount = 0;
-global.noseCount = 0;
-global.facialHairCount = 0;
-global.mouthCount = 0;
-global.glassesCount = 0;
-global.moleCount = 0;
-global.faceCount = 0;
 
 function generateInstructions(file) {
     const parsedFile = new ufsd(new KaitaiStream(fs.readFileSync(file)));
