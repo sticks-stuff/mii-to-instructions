@@ -10,6 +10,12 @@ const defaultF = fs.readFileSync("defaultF.ufsd");
 const parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
 
 const map = JSON.parse(fs.readFileSync("maps_Switch.json"));
+const flip = JSON.parse(fs.readFileSync("flip.json"));
+
+const rotation = fs.readFileSync("rotation.json");
+const parsedrotation = JSON.parse(rotation);
+
+const icons = JSON.parse(fs.readFileSync("icons.json"));
 
 let global = {};
 global.hairCount = 0;
@@ -54,11 +60,6 @@ function pad(n, width, z) {
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
 
-const rotation = fs.readFileSync("rotation.json");
-const parsedrotation = JSON.parse(rotation);
-
-const icons = JSON.parse(fs.readFileSync("icons.json"));
-
 function getEyebrowRotation(eyebrowType) {
     if (eyebrowType === '0x17') {
         return 0;
@@ -98,7 +99,15 @@ function generateInstructions(file) {
     if(toHex(parsedFile.hairType) != "0x1e"){
         hair += addInstructionPage("hairType", parsedFile, defaultFile, "hairCount");
         hair += addInstructionColor("hairColor", parsedFile, defaultFile, "hairCount");
-        // hair += addInstruction("hairFlip", parsedFile, defaultFile, "hairCount");
+        if (flip.flip.includes(toHex(parsedFile.hairType))) {
+            if(parsedFile.hairFlip === 1) {
+                hair += "<tr>";
+                hair += "<td class='icon'>";
+                hair += icons["menu parts"]['flip hair'];
+                hair += "</td><td>Flip hair</td></tr>";
+                global.hairCount++;
+            }
+        }
         if(global.hairCount > 0){hair = "<tr><th valign='top' align='right' rowspan='" + global.hairCount + "' style='font-size:20'>Hair</th>" + hair;}
     }
 
