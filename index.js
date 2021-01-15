@@ -142,8 +142,8 @@ function generateInstructions(file) {
     }
     if(global.facialHairCount > 0){facialHair = "<tr><th valign='top' align='right' rowspan='" + global.facialHairCount + "' style='font-size:20'>Facial Hair</th>" + facialHair;}
 
+    var glasses = "";
     if(parsedFile.glassesType != 0) {
-        var glasses = "";
         glasses += addInstruction("glassesType", parsedFile, defaultFile, "glassesCount");
         glasses += addInstructionColor("glassesColor", parsedFile, defaultFile, "glassesCount");
         glasses += addInstructionNumber("glassesVertical", parsedFile, defaultFile, "move up", "move down", "glassesCount");
@@ -151,8 +151,8 @@ function generateInstructions(file) {
         if(global.glassesCount > 0){glasses = "<tr><th valign='top' align='right' rowspan='" + global.glassesCount + "' style='font-size:20'>Glasses</th>" + glasses;}
     }
 
+    var mole = "";
     if(parsedFile.moleEnable === 1) {
-        var mole = "";
         mole += addInstruction("moleEnable", parsedFile, defaultFile, "moleCount");
         mole += addInstructionNumber("moleHorizontal", parsedFile, defaultFile, "closer", "father", "moleCount");
         mole += addInstructionNumber("moleVertical", parsedFile, defaultFile, "move up", "move down", "moleCount");
@@ -209,7 +209,7 @@ function generateInstructions(file) {
     }
 
     end += "</tbody></table>\n</div>";
-    return head + face + hair + eyebrows + eyes + nose + mouth + end;
+    return head + face + hair + mole + eyebrows + eyes + facialHair + nose + mouth + glasses + end;
 }
 
 function addInstruction (attrbute, parsedFile, defaultFile, counter) {
