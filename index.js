@@ -64,12 +64,12 @@ function getEyebrowRotation(eyebrowType) {
     if (eyebrowType === '0x17') {
         return 0;
     } else {
-        return getStringLocation(parsedrotation.eyebrows, eyebrowType).row + 3;
+        return getStringLocation(parsedrotation.eyebrows, eyebrowType).row + 4;
     }
 }
 
 function getEyeRotation(eyeType) {
-    return getStringLocation(parsedrotation.eyes, eyeType).row + 1;
+    return getStringLocation(parsedrotation.eyes, eyeType).row + 2;
 }
 
 function toHex(int) {
@@ -117,7 +117,7 @@ function generateInstructions(file) {
         eyebrows += addInstructionColor("eyebrowColor", parsedFile, defaultFile, "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowVertical", parsedFile, defaultFile, "move up", "move down", "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowHorizontal", parsedFile, defaultFile, "closer", "father", "eyebrowCount");
-        eyebrows += addInstructionRotation("eyebrowRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyebrowRotation(toHex(parsedFile.eyebrowRotation)), "eyebrowCount");
+        eyebrows += addInstructionRotation("eyebrowRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyebrowRotation(toHex(parsedFile.eyebrowType)), "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowSize", parsedFile, defaultFile, "larger", "smaller", "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowStretch", parsedFile, defaultFile, "flatter", "wider", "eyebrowCount");
         if(global.eyebrowCount > 0){eyebrows = "<tr><th valign='top' align='right' rowspan='" + global.eyebrowCount + "' style='font-size:20'>Eyebrows</th>" + eyebrows;}
@@ -128,7 +128,7 @@ function generateInstructions(file) {
     eyes += addInstructionColor("eyeColor", parsedFile, defaultFile, "eyeCount");
     eyes += addInstructionNumber("eyeVertical", parsedFile, defaultFile, "move up", "move down", "eyeCount");
     eyes += addInstructionNumber("eyeHorizontal", parsedFile, defaultFile, "closer", "father", "eyeCount");
-    eyes += addInstructionRotation("eyeRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyeRotation(toHex(parsedFile.eyeRotation)), "eyeCount");
+    eyes += addInstructionRotation("eyeRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyeRotation(toHex(parsedFile.eyeType)), "eyeCount");
     eyes += addInstructionNumber("eyeSize", parsedFile, defaultFile, "smaller", "larger", "eyeCount");
     eyes += addInstructionNumber("eyeStretch", parsedFile, defaultFile, "flatter", "wider", "eyeCount");
     if(global.eyeCount > 0){eyes = "<tr><th valign='top' align='right' rowspan='" + global.eyeCount + "' style='font-size:20'>Eyes</th>" + eyes;}
@@ -344,7 +344,6 @@ function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, le
     } catch (err) {
         console.error("Panic at " + attrbute);
     }
-
 }
 
 var myArgs = process.argv.slice(2);
