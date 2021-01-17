@@ -11,6 +11,7 @@ const parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
 
 const map = JSON.parse(fs.readFileSync("maps_Switch.json"));
 const flip = JSON.parse(fs.readFileSync("flip.json"));
+const mouthColor = JSON.parse(fs.readFileSync("mouthColor.json"));
 
 const rotation = fs.readFileSync("rotation.json");
 const parsedrotation = JSON.parse(rotation);
@@ -171,7 +172,9 @@ function generateInstructions(file) {
 
     mouth = "";
     mouth += addInstruction("mouthType", parsedFile, defaultFile, "mouthCount");
-    mouth += addInstructionColor("mouthColor", parsedFile, defaultFile, "mouthCount");
+    if (mouthColor.possible.includes(toHex(parsedFile.mouthColor))) {
+        mouth += addInstructionColor("mouthColor", parsedFile, defaultFile, "mouthCount");
+    }
     mouth += addInstructionNumber("mouthVertical", parsedFile, defaultFile, "move up", "move down", "mouthCount");
     mouth += addInstructionNumber("mouthSize", parsedFile, defaultFile, "smaller", "larger", "mouthCount");
     mouth += addInstructionNumber("mouthStretch", parsedFile, defaultFile, "flatter", "wider", "mouthCount");
