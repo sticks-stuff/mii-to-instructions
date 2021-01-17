@@ -97,8 +97,8 @@ function generateInstructions(file) {
     face += "</tbody>";
 
     var hair = "";
+    hair += addInstructionPage("hairType", parsedFile, defaultFile, "hairCount");
     if(toHex(parsedFile.hairType) != "0x1e"){
-        hair += addInstructionPage("hairType", parsedFile, defaultFile, "hairCount");
         if (flip.flip.includes(toHex(parsedFile.hairType))) {
             if(parsedFile.hairFlip === 1) {
                 hair += "<tr>";
@@ -109,8 +109,8 @@ function generateInstructions(file) {
             }
         }
         hair += addInstructionColor("hairColor", parsedFile, defaultFile, "hairCount");
-        if(global.hairCount > 0){hair = "<tr><th valign='top' align='right' rowspan='" + global.hairCount + "' style='font-size:20'>Hair</th>" + hair;}
     }
+    if(global.hairCount > 0){hair = "<tr><th valign='top' align='right' rowspan='" + global.hairCount + "' style='font-size:20'>Hair</th>" + hair;}
 
     var eyebrows = "";
     if(toHex(parsedFile.hairType) != "0x17"){
