@@ -116,7 +116,7 @@ function generateInstructions(file) {
         eyebrows += addInstruction("eyebrowType", parsedFile, defaultFile, "eyebrowCount");
         eyebrows += addInstructionColor("eyebrowColor", parsedFile, defaultFile, "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowVertical", parsedFile, defaultFile, "move up", "move down", "eyebrowCount");
-        eyebrows += addInstructionNumber("eyebrowHorizontal", parsedFile, defaultFile, "closer", "father", "eyebrowCount");
+        eyebrows += addInstructionNumber("eyebrowHorizontal", parsedFile, defaultFile, "closer", "farther", "eyebrowCount");
         eyebrows += addInstructionRotation("eyebrowRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyebrowRotation(toHex(parsedFile.eyebrowType)), "eyebrowCount");
         console.log(addInstructionNumber("eyebrowSize", defaultFile, parsedFile, "larger", "smaller", "eyebrowCount"));
         eyebrows += addInstructionNumber("eyebrowStretch", parsedFile, defaultFile, "flatter", "wider", "eyebrowCount");
@@ -127,7 +127,7 @@ function generateInstructions(file) {
     eyes += addInstructionPage("eyeType", parsedFile, defaultFile, "eyeCount");
     eyes += addInstructionColor("eyeColor", parsedFile, defaultFile, "eyeCount");
     eyes += addInstructionNumber("eyeVertical", parsedFile, defaultFile, "move up", "move down", "eyeCount");
-    eyes += addInstructionNumber("eyeHorizontal", parsedFile, defaultFile, "closer", "father", "eyeCount");
+    eyes += addInstructionNumber("eyeHorizontal", parsedFile, defaultFile, "closer", "farther", "eyeCount");
     eyes += addInstructionRotation("eyeRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyeRotation(toHex(parsedFile.eyeType)), "eyeCount");
     eyes += addInstructionNumber("eyeSize", parsedFile, defaultFile, "smaller", "larger", "eyeCount");
     eyes += addInstructionNumber("eyeStretch", parsedFile, defaultFile, "flatter", "wider", "eyeCount");
@@ -164,7 +164,7 @@ function generateInstructions(file) {
     if(parsedFile.moleEnable === 1) {
         mole += addInstruction("moleEnable", parsedFile, defaultFile, "moleCount");
         mole += addInstructionNumber("moleVertical", parsedFile, defaultFile, "move up", "move down", "moleCount");
-        mole += addInstructionNumber("moleHorizontal", parsedFile, defaultFile, "closer", "father", "moleCount");
+        mole += addInstructionNumber("moleHorizontal", parsedFile, defaultFile, "closer", "farther", "moleCount");
         mole += addInstructionNumber("moleSize", parsedFile, defaultFile, "smaller", "larger", "moleCount");
         if(global.moleCount > 0){mole = "<tr><th valign='top' align='right' rowspan='" + global.moleCount + "' style='font-size:20'>Mole</th>" + mole;}
     }
