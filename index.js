@@ -202,12 +202,12 @@ function generateInstructions(file) {
             end += "<td class='icon'>";
             end += icons["menu parts"].weight;
             end += "</td><td>";
-            end += parsedFile.bodyWeight + "/127 (" + Math.abs(differencebodyWeight) + " clicks left)";
+            end += parsedFile.bodyWeight + "/127 (" + Math.abs(differencebodyWeight) + " clicks right)";
         } else {
             end += "<td class='icon'>";
             end += icons["menu parts"].weight;
             end += "</td><td>";
-            end += parsedFile.bodyWeight + "/127 (" + Math.abs(differencebodyWeight) + " clicks right)";
+            end += parsedFile.bodyWeight + "/127 (" + Math.abs(differencebodyWeight) + " clicks left)";
         }
         end += "</td></tr>\n";
     }
