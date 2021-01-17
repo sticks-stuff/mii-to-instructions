@@ -98,7 +98,6 @@ function generateInstructions(file) {
     var hair = "";
     if(toHex(parsedFile.hairType) != "0x1e"){
         hair += addInstructionPage("hairType", parsedFile, defaultFile, "hairCount");
-        hair += addInstructionColor("hairColor", parsedFile, defaultFile, "hairCount");
         if (flip.flip.includes(toHex(parsedFile.hairType))) {
             if(parsedFile.hairFlip === 1) {
                 hair += "<tr>";
@@ -108,6 +107,7 @@ function generateInstructions(file) {
                 global.hairCount++;
             }
         }
+        hair += addInstructionColor("hairColor", parsedFile, defaultFile, "hairCount");
         if(global.hairCount > 0){hair = "<tr><th valign='top' align='right' rowspan='" + global.hairCount + "' style='font-size:20'>Hair</th>" + hair;}
     }
 
@@ -140,8 +140,8 @@ function generateInstructions(file) {
     if(global.noseCount > 0){nose = "<tr><th valign='top' align='right' rowspan='" + global.noseCount + "' style='font-size:20'>Nose</th>" + nose;}
 
     var facialHair = "";
-    facialHair += addInstruction("facialHairBeard", parsedFile, defaultFile, "facialHairCount");
     facialHair += addInstruction("facialHairMustache", parsedFile, defaultFile, "facialHairCount");
+    facialHair += addInstruction("facialHairBeard", parsedFile, defaultFile, "facialHairCount");
     if(parsedFile.facialHairMustache != 0 || parsedFile.facialHairBeard != 0) {
         facialHair += addInstructionColor("facialHairColor", parsedFile, defaultFile, "facialHairCount");
     }
@@ -163,8 +163,8 @@ function generateInstructions(file) {
     var mole = "";
     if(parsedFile.moleEnable === 1) {
         mole += addInstruction("moleEnable", parsedFile, defaultFile, "moleCount");
-        mole += addInstructionNumber("moleHorizontal", parsedFile, defaultFile, "closer", "father", "moleCount");
         mole += addInstructionNumber("moleVertical", parsedFile, defaultFile, "move up", "move down", "moleCount");
+        mole += addInstructionNumber("moleHorizontal", parsedFile, defaultFile, "closer", "father", "moleCount");
         mole += addInstructionNumber("moleSize", parsedFile, defaultFile, "smaller", "larger", "moleCount");
         if(global.moleCount > 0){mole = "<tr><th valign='top' align='right' rowspan='" + global.moleCount + "' style='font-size:20'>Mole</th>" + mole;}
     }
@@ -218,7 +218,7 @@ function generateInstructions(file) {
     }
 
     end += "</tbody></table>\n</div>";
-    return head + face + hair + mole + eyebrows + eyes + facialHair + nose + mouth + glasses + end;
+    return head + face + hair + eyebrows + eyes +  nose + mouth + mole + facialHair + glasses + end;
 }
 
 function addInstruction (attrbute, parsedFile, defaultFile, counter) {
