@@ -113,16 +113,16 @@ function generateInstructions(file) {
     if(global.hairCount > 0){hair = "<tr><th valign='top' align='right' rowspan='" + global.hairCount + "' style='font-size:20'>Hair</th>" + hair;}
 
     var eyebrows = "";
+    eyebrows += addInstruction("eyebrowType", parsedFile, defaultFile, "eyebrowCount");
     if(toHex(parsedFile.hairType) != "0x17"){
-        eyebrows += addInstruction("eyebrowType", parsedFile, defaultFile, "eyebrowCount");
         eyebrows += addInstructionColor("eyebrowColor", parsedFile, defaultFile, "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowVertical", parsedFile, defaultFile, "move up", "move down", "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowHorizontal", parsedFile, defaultFile, "closer", "farther", "eyebrowCount");
         eyebrows += addInstructionRotation("eyebrowRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyebrowRotation(toHex(parsedFile.eyebrowType)), "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowSize", defaultFile, parsedFile, "larger", "smaller", "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowStretch", parsedFile, defaultFile, "flatter", "wider", "eyebrowCount");
-        if(global.eyebrowCount > 0){eyebrows = "<tr><th valign='top' align='right' rowspan='" + global.eyebrowCount + "' style='font-size:20'>Eyebrows</th>" + eyebrows;}
     }
+    if(global.eyebrowCount > 0){eyebrows = "<tr><th valign='top' align='right' rowspan='" + global.eyebrowCount + "' style='font-size:20'>Eyebrows</th>" + eyebrows;}
 
     var eyes = "";
     eyes += addInstructionPage("eyeType", parsedFile, defaultFile, "eyeCount");
