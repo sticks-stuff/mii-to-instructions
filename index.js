@@ -163,6 +163,11 @@ function generateInstructions(file) {
 
     var mole = "";
     if(parsedFile.moleEnable === 1) {
+        mole += "<tr>";
+        mole += "<td class='icon'>";
+        mole += icons["moleEnable"][0][1];
+        mole += "</td><td>Enable</td></tr>";
+        global.moleCount = 2;
         mole += addInstructionNumber("moleVertical", parsedFile, defaultFile, "move up", "move down", "moleCount");
         mole += addInstructionNumber("moleHorizontal", parsedFile, defaultFile, "move left", "move right", "moleCount");
         mole += addInstructionNumber("moleSize", parsedFile, defaultFile, "smaller", "larger", "moleCount");
