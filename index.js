@@ -163,7 +163,6 @@ function generateInstructions(file) {
 
     var mole = "";
     if(parsedFile.moleEnable === 1) {
-        mole += addInstruction("moleEnable", parsedFile, defaultFile, "moleCount");
         mole += addInstructionNumber("moleVertical", parsedFile, defaultFile, "move up", "move down", "moleCount");
         mole += addInstructionNumber("moleHorizontal", parsedFile, defaultFile, "move left", "move right", "moleCount");
         mole += addInstructionNumber("moleSize", parsedFile, defaultFile, "smaller", "larger", "moleCount");
