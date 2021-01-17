@@ -232,7 +232,7 @@ function addInstruction (attrbute, parsedFile, defaultFile, counter) {
             output += "<td class='icon'>";
             output += icons[attrbute][location.row - 1][location.column - 1];
             output += "</td><td>";
-            output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
+            output += attrbute.replace(/.*(?=[A-Z])/,'') + ": ";
             output += converter.toOrdinal(location.row) + " row, ";
             output += converter.toOrdinal(location.column) + " column";
             output += "</td></tr>\n";
@@ -253,7 +253,7 @@ function addInstructionColor (attrbute, parsedFile, defaultFile, counter) {
                 output += "<td class='icon'>";
                 output += icons[attrbute][location.row - 1][location.column - 1];
                 output += "</td><td>";
-                output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
+                output += attrbute.replace(/.*(?=[A-Z])/,'') + ": ";
                 output += " Default colors, ";
                 output += converter.toOrdinal(location.row) + " row, ";
                 output += converter.toOrdinal(location.column) + " column";
@@ -264,7 +264,7 @@ function addInstructionColor (attrbute, parsedFile, defaultFile, counter) {
                 output += "<td class='icon'>";
                 output += icons.customColors[locationCustom.row - 1][locationCustom.column - 1];
                 output += "</td><td>";
-                output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
+                output += attrbute.replace(/.*(?=[A-Z])/,'') + ": ";
                 output += " Custom colors, ";
                 output += converter.toOrdinal(locationCustom.row) + " row, ";
                 output += converter.toOrdinal(locationCustom.column) + " column";
@@ -286,7 +286,7 @@ function addInstructionPage (attrbute, parsedFile, defaultFile, counter) {
             output += "<td class='icon'>";
             output += icons[attrbute][location.page - 1][location.row - 1][location.column - 1];
             output += "</td><td>";
-            output += attrbute.replace(/^[^A-Z]+/,'') + ": ";
+            output += attrbute.replace(/.*(?=[A-Z])/,'') + ": ";
             output += converter.toOrdinal(location.page) + " page, ";
             output += converter.toOrdinal(location.row) + " row, ";
             output += converter.toOrdinal(location.column) + " column";
@@ -308,12 +308,12 @@ function addInstructionNumber (attrbute, parsedFile, defaultFile, moreText, less
                 output += "<td class='icon'>";
                 output += icons["menu parts"][lessText];
                 output += "</td><td>";
-                output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + lessText.replace('move ','');
+                output += attrbute.replace(/.*(?=[A-Z])/,'') + ": " + Math.abs(difference) + " " + lessText.replace('move ','');
             } else {
                 output += "<td class='icon'>";
                 output += icons["menu parts"][moreText];
                 output += "</td><td>";
-                output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + moreText.replace('move ','');
+                output += attrbute.replace(/.*(?=[A-Z])/,'') + ": " + Math.abs(difference) + " " + moreText.replace('move ','');
             }
             global[counter] = global[counter] + 1;
             output += "</td></tr>\n";
@@ -333,12 +333,12 @@ function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, le
                 output += "<td class='icon'>";
                 output += icons["menu parts"][lessText];
                 output += "</td><td>";
-                output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + lessText.replace('rotate ','');
+                output += attrbute.replace(/.*(?=[A-Z])/,'') + ": " + Math.abs(difference) + " " + lessText.replace('rotate ','');
             } else {
                 output += "<td class='icon'>";
                 output += icons["menu parts"][moreText];
                 output += "</td><td>";
-                output += attrbute.replace(/^[^A-Z]+/,'') + ": " + Math.abs(difference) + " " + moreText.replace('rotate ','');
+                output += attrbute.replace(/.*(?=[A-Z])/,'') + ": " + Math.abs(difference) + " " + moreText.replace('rotate ','');
             }
             global[counter] = global[counter] + 1;
             output += "</td></tr>\n";
