@@ -1,22 +1,26 @@
-const fs = require("fs");
 const ufsd = require("./MiidataSwi");
 const KaitaiStream = require('kaitai-struct/KaitaiStream');
 var converter = require('number-to-words');
+var request = new XMLHttpRequest();
 
-const defaultM = fs.readFileSync("defaultM.ufsd");
-const parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
+function getJSON(file) {
+    request.open("GET", file, false);
+    request.send(null);
+    request.onreadystatechange = function() {
+        if ( request.readyState === 4 && request.status === 200 ) {
+            var my_JSON_object = JSON.parse(request.responseText);
+            return(my_JSON_object);
+        }
+    };
+}
 
-const defaultF = fs.readFileSync("defaultF.ufsd");
-const parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
+const map = getJSON("maps_Switch.json");
+const flip = getJSON("flip.json");
+const mouthColor = getJSON("mouthColor.json");
 
-const map = JSON.parse(fs.readFileSync("maps_Switch.json"));
-const flip = JSON.parse(fs.readFileSync("flip.json"));
-const mouthColor = JSON.parse(fs.readFileSync("mouthColor.json"));
+const parsedrotation = getJSON("rotation.json");
 
-const rotation = fs.readFileSync("rotation.json");
-const parsedrotation = JSON.parse(rotation);
-
-const icons = JSON.parse(fs.readFileSync("icons.json"));
+const icons = getJSON("icons.json");
 
 let global = {};
 global.hairCount = 0;
@@ -77,14 +81,13 @@ function toHex(int) {
     return '0x' + pad(int.toString(16), 2);
 }
 
-function generateInstructions(file) {
-    const parsedFile = new ufsd(new KaitaiStream(fs.readFileSync(file)));
+function generateInstructions(parsedFile) {
     var head;
     if (parsedFile.gender === 0) {
-        defaultFile = new ufsd(new KaitaiStream(fs.readFileSync("defaultM.ufsd")));
+        defaultFile = fetch("defaultM.ufsd").then(resp => resp.arrayBuffer().then(buf => console.log(new ufsd(new KaitaiStream(buf)))));
         head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/KKyM2gf/male.png' alt='male' width='45' height='45' class='icon'></td><td>Male</td></tr>\n";  
     } else {
-        defaultFile = new ufsd(new KaitaiStream(fs.readFileSync("defaultF.ufsd")));
+        defaultFile = fetch("defaultF.ufsd").then(resp => resp.arrayBuffer().then(buf => console.log(new ufsd(new KaitaiStream(buf)))));
         head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/tmz1Qw3/female.png' alt='female' width='45' height='45' class='icon'></td><td>Female</td></tr>\n";  
     }
 
@@ -353,5 +356,17 @@ function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, le
     }
 }
 
-var myArgs = process.argv.slice(2);
-console.log(generateInstructions(myArgs[0]));
+const reader = new FileReader();
+
+const fileSelector = document.getElementById('fileInput');
+  fileSelector.addEventListener('change', (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+    reader.readAsArrayBuffer(file);
+    reader.onload = function(){
+      console.log(reader.result);
+      const parsedFile = new ufsd(new KaitaiStream(reader.result));
+      console.log(parsedFile);
+      console.log(generateInstructions(parsedFile));
+  };
+});
