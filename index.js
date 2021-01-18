@@ -389,8 +389,22 @@ const fileSelector = document.getElementById('fileInput');
             iframe.style.width  =  iframe.contentWindow.document.body.scrollWidth+'px';    
         };
 
+        var copyText = document.getElementById("copyText");
+
+        if(copyText != null) {
+            copyText.style.opacity = "0";
+            copyText.remove();
+        }
+
+        copyText = document.createElement('input');
+        copyText.type = "text";
+        copyText.value = generateInstructions(parsedFile);
+        copyText.id = "copyText";
+        document.getElementById("input-container-container").appendChild(copyText);
+
         setTimeout(function(){ 
             iframe.style.opacity = "1";
+            copyText.style.opacity = "1";
         }, 1000);
   };
 });

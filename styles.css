@@ -92,3 +92,11 @@ iframe {
 	transition: opacity 0.5s ease;
 	vertical-align:bottom; 
 }
+
+#copyText {
+	width: 80%;
+	height: auto;
+	font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+	transition: opacity 0.5s ease;
+	opacity: 0%;
+}
