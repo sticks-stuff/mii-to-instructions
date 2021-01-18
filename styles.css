@@ -85,7 +85,7 @@ button {
 	font-family: 'Open Sans', sans-serif;
 }
 
-img {
+/* #results {
 	height: 50vw;
 	position: absolute;
 	max-height: 50vh;
@@ -93,7 +93,7 @@ img {
 	transform: translate(0%, 45vh);
 	transition: opacity 0.5s ease;
 	display:none;
-}
+} */
 
 .options {
 	font-size: 2em;

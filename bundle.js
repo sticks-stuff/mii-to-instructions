@@ -17631,7 +17631,6 @@ function toHex(int) {
 }
 
 function generateInstructions(parsedFile) {
-    let global = {};
     global.hairCount = 0;
     global.eyebrowCount = 0;
     global.eyeCount = 0;
@@ -17655,7 +17654,7 @@ function generateInstructions(parsedFile) {
     face += addInstruction("faceColor", parsedFile, defaultFile, "faceCount");
     face += addInstruction("faceWrinkles", parsedFile, defaultFile, "faceCount");
     face += addInstruction("faceMakeup", parsedFile, defaultFile, "faceCount");
-    if(global.faceCount > 0){face = "<tbody><tr><th valign='top' align='right' rowspan='" + global.faceCount + "' style='font-size:20'>Face</th>" + face;}
+    if(global.faceCount > 0){face = "<tbody><tr><th valign='top' align='right' rowspan='" + global.faceCount + "' style='font-size:20'>Face</th>" + face + "</tr>";}
     face += "</tbody>";
 
     var hair = "";
@@ -17672,7 +17671,7 @@ function generateInstructions(parsedFile) {
         }
         hair += addInstructionColor("hairColor", parsedFile, defaultFile, "hairCount");
     }
-    if(global.hairCount > 0){hair = "<tr><th valign='top' align='right' rowspan='" + global.hairCount + "' style='font-size:20'>Hair</th>" + hair;}
+    if(global.hairCount > 0){hair = "<tr><th valign='top' align='right' rowspan='" + global.hairCount + "' style='font-size:20'>Hair</th>" + hair + "</tr>";}
 
     var eyebrows = "";
     eyebrows += addInstruction("eyebrowType", parsedFile, defaultFile, "eyebrowCount");
@@ -17684,7 +17683,7 @@ function generateInstructions(parsedFile) {
         eyebrows += addInstructionNumber("eyebrowSize", defaultFile, parsedFile, "larger", "smaller", "eyebrowCount");
         eyebrows += addInstructionNumber("eyebrowStretch", parsedFile, defaultFile, "flatter", "wider", "eyebrowCount");
     }
-    if(global.eyebrowCount > 0){eyebrows = "<tr><th valign='top' align='right' rowspan='" + global.eyebrowCount + "' style='font-size:20'>Eyebrows</th>" + eyebrows;}
+    if(global.eyebrowCount > 0){eyebrows = "<tr><th valign='top' align='right' rowspan='" + global.eyebrowCount + "' style='font-size:20'>Eyebrows</th>" + eyebrows + "</tr>";}
 
     var eyes = "";
     eyes += addInstructionPage("eyeType", parsedFile, defaultFile, "eyeCount");
@@ -17694,13 +17693,13 @@ function generateInstructions(parsedFile) {
     eyes += addInstructionRotation("eyeRotation", parsedFile, defaultFile, "rotate down", "rotate up", getEyeRotation(toHex(parsedFile.eyeType)), "eyeCount");
     eyes += addInstructionNumber("eyeSize", parsedFile, defaultFile, "smaller", "larger", "eyeCount");
     eyes += addInstructionNumber("eyeStretch", parsedFile, defaultFile, "flatter", "wider", "eyeCount");
-    if(global.eyeCount > 0){eyes = "<tr><th valign='top' align='right' rowspan='" + global.eyeCount + "' style='font-size:20'>Eyes</th>" + eyes;}
+    if(global.eyeCount > 0){eyes = "<tr><th valign='top' align='right' rowspan='" + global.eyeCount + "' style='font-size:20'>Eyes</th>" + eyes + "</tr>";}
 
     var nose = "";
     nose += addInstruction("noseType", parsedFile, defaultFile, "noseCount");
     nose += addInstructionNumber("noseVertical", parsedFile, defaultFile, "move up", "move down", "noseCount");
     nose += addInstructionNumber("noseSize", parsedFile, defaultFile, "smaller", "larger", "noseCount");
-    if(global.noseCount > 0){nose = "<tr><th valign='top' align='right' rowspan='" + global.noseCount + "' style='font-size:20'>Nose</th>" + nose;}
+    if(global.noseCount > 0){nose = "<tr><th valign='top' align='right' rowspan='" + global.noseCount + "' style='font-size:20'>Nose</th>" + nose + "</tr>";}
 
     var facialHair = "";
     facialHair += addInstruction("facialHairMustache", parsedFile, defaultFile, "facialHairCount");
@@ -17712,7 +17711,7 @@ function generateInstructions(parsedFile) {
         facialHair += addInstructionNumber("facialHairVertical", parsedFile, defaultFile, "move up", "move down", "facialHairCount");
         facialHair += addInstructionNumber("facialHairSize", parsedFile, defaultFile, "smaller", "larger", "facialHairCount");
     }
-    if(global.facialHairCount > 0){facialHair = "<tr><th valign='top' align='right' rowspan='" + global.facialHairCount + "' style='font-size:20'>Facial Hair</th>" + facialHair;}
+    if(global.facialHairCount > 0){facialHair = "<tr><th valign='top' align='right' rowspan='" + global.facialHairCount + "' style='font-size:20'>Facial Hair</th>" + facialHair + "</tr>";}
 
     var glasses = "";
     if(parsedFile.glassesType != 0) {
@@ -17720,7 +17719,7 @@ function generateInstructions(parsedFile) {
         glasses += addInstructionColor("glassesColor", parsedFile, defaultFile, "glassesCount");
         glasses += addInstructionNumber("glassesVertical", parsedFile, defaultFile, "move up", "move down", "glassesCount");
         glasses += addInstructionNumber("glassesSize", parsedFile, defaultFile, "smaller", "larger", "glassesCount");
-        if(global.glassesCount > 0){glasses = "<tr><th valign='top' align='right' rowspan='" + global.glassesCount + "' style='font-size:20'>Glasses</th>" + glasses;}
+        if(global.glassesCount > 0){glasses = "<tr><th valign='top' align='right' rowspan='" + global.glassesCount + "' style='font-size:20'>Glasses</th>" + glasses + "</tr>";}
     }
 
     var mole = "";
@@ -17733,10 +17732,10 @@ function generateInstructions(parsedFile) {
         mole += addInstructionNumber("moleVertical", parsedFile, defaultFile, "move up", "move down", "moleCount");
         mole += addInstructionNumber("moleHorizontal", parsedFile, defaultFile, "move left", "move right", "moleCount");
         mole += addInstructionNumber("moleSize", parsedFile, defaultFile, "smaller", "larger", "moleCount");
-        if(global.moleCount > 0){mole = "<tr><th valign='top' align='right' rowspan='" + global.moleCount + "' style='font-size:20'>Mole</th>" + mole;}
+        if(global.moleCount > 0){mole = "<tr><th valign='top' align='right' rowspan='" + global.moleCount + "' style='font-size:20'>Mole</th>" + mole + "</tr>";}
     }
 
-    mouth = "";
+    var mouth = "";
     mouth += addInstruction("mouthType", parsedFile, defaultFile, "mouthCount");
     if (mouthColor.possible.includes(toHex(parsedFile.mouthColor))) {
         mouth += addInstructionColor("mouthColor", parsedFile, defaultFile, "mouthCount");
@@ -17744,7 +17743,7 @@ function generateInstructions(parsedFile) {
     mouth += addInstructionNumber("mouthVertical", parsedFile, defaultFile, "move up", "move down", "mouthCount");
     mouth += addInstructionNumber("mouthSize", parsedFile, defaultFile, "smaller", "larger", "mouthCount");
     mouth += addInstructionNumber("mouthStretch", parsedFile, defaultFile, "flatter", "wider", "mouthCount");
-    if(global.mouthCount > 0){mouth = "<tr><th valign='top' align='right' rowspan='" + global.mouthCount + "' style='font-size:20'>Mouth</th>" + mouth;}
+    if(global.mouthCount > 0){mouth = "<tr><th valign='top' align='right' rowspan='" + global.mouthCount + "' style='font-size:20'>Mouth</th>" + mouth + "</tr>";}
 
     var end = "";
     if(parsedFile.bodyHeight != defaultFile.bodyHeight) {
@@ -17929,10 +17928,11 @@ const fileSelector = document.getElementById('fileInput');
       defaultFile = defaultFileM;
       console.log("defaultFile.bodyWeight " + defaultFile.bodyWeight);
       console.log("parsedFile.bodyWeight " + parsedFile.bodyWeight);
-    //   console.log(generateInstructions(parsedFile));
+      console.log(generateInstructions(parsedFile));
       document.getElementById("results").innerHTML = generateInstructions(parsedFile);
       document.getElementById("input-container-container").style.transform = "translate(0%, 15vh)";
       document.getElementById("results").style.display = "flex";
+      
       setTimeout(function(){ 
           document.getElementById("results").style.opacity = "1";
       }, 1000);
