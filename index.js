@@ -1,37 +1,22 @@
 const ufsd = require("./MiidataSwi");
 const KaitaiStream = require('kaitai-struct/KaitaiStream');
 var converter = require('number-to-words');
-var request = new XMLHttpRequest();
 
-function getJSON(file) {
-    request.open("GET", file, false);
-    request.send(null);
-    request.onreadystatechange = function() {
-        if ( request.readyState === 4 && request.status === 200 ) {
-            var my_JSON_object = JSON.parse(request.responseText);
-            return(my_JSON_object);
-        }
-    };
-}
+fetch("defaultM.ufsd").then(resp => resp.arrayBuffer().then(buf => (defaultFileM = new ufsd(new KaitaiStream(buf)))));
+fetch("defaultF.ufsd").then(resp => resp.arrayBuffer().then(buf => (defaultFileF = new ufsd(new KaitaiStream(buf)))));
 
-const map = getJSON("maps_Switch.json");
-const flip = getJSON("flip.json");
-const mouthColor = getJSON("mouthColor.json");
 
-const parsedrotation = getJSON("rotation.json");
+const map = require('./maps_Switch.json');
+const flip = require('./flip.json');
+const mouthColor = require('./mouthColor.json');
+const parsedrotation = require('./rotation.json');
+const icons = require('./icons.json');
 
-const icons = getJSON("icons.json");
-
-let global = {};
-global.hairCount = 0;
-global.eyebrowCount = 0;
-global.eyeCount = 0;
-global.noseCount = 0;
-global.facialHairCount = 0;
-global.mouthCount = 0;
-global.glassesCount = 0;
-global.moleCount = 0;
-global.faceCount = 0;
+console.log(map);
+console.log(flip);
+console.log(mouthColor);
+console.log(parsedrotation);
+console.log(icons);
 
 function getStringLocation(array, string) {
     for( var i = 0; i < array.length; i++ ) {
@@ -82,12 +67,22 @@ function toHex(int) {
 }
 
 function generateInstructions(parsedFile) {
+    let global = {};
+    global.hairCount = 0;
+    global.eyebrowCount = 0;
+    global.eyeCount = 0;
+    global.noseCount = 0;
+    global.facialHairCount = 0;
+    global.mouthCount = 0;
+    global.glassesCount = 0;
+    global.moleCount = 0;
+    global.faceCount = 0;
     var head;
     if (parsedFile.gender === 0) {
-        defaultFile = fetch("defaultM.ufsd").then(resp => resp.arrayBuffer().then(buf => console.log(new ufsd(new KaitaiStream(buf)))));
+        defaultFile = defaultFileM;
         head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/KKyM2gf/male.png' alt='male' width='45' height='45' class='icon'></td><td>Male</td></tr>\n";  
     } else {
-        defaultFile = fetch("defaultF.ufsd").then(resp => resp.arrayBuffer().then(buf => console.log(new ufsd(new KaitaiStream(buf)))));
+        defaultFile = defaultFileF;
         head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/tmz1Qw3/female.png' alt='female' width='45' height='45' class='icon'></td><td>Female</td></tr>\n";  
     }
 
@@ -367,6 +362,15 @@ const fileSelector = document.getElementById('fileInput');
       console.log(reader.result);
       const parsedFile = new ufsd(new KaitaiStream(reader.result));
       console.log(parsedFile);
-      console.log(generateInstructions(parsedFile));
+      defaultFile = defaultFileM;
+      console.log("defaultFile.bodyWeight " + defaultFile.bodyWeight);
+      console.log("parsedFile.bodyWeight " + parsedFile.bodyWeight);
+    //   console.log(generateInstructions(parsedFile));
+      document.getElementById("results").innerHTML = generateInstructions(parsedFile);
+      document.getElementById("input-container-container").style.transform = "translate(0%, 15vh)";
+      document.getElementById("results").style.display = "flex";
+      setTimeout(function(){ 
+          document.getElementById("results").style.opacity = "1";
+      }, 1000);
   };
 });
