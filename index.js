@@ -384,18 +384,9 @@ const fileSelector = document.getElementById('fileInput');
         iframe.contentWindow.document.close();
 
         // Adjusting the iframe height onload event 
-        iframe.onload = function() 
-        // function execute while load the iframe 
-        { 
-          // set the height of the iframe as  
-          // the height of the iframe content 
-          iframe.style.height =  iframe.contentWindow.document.body.scrollHeight + 'px'; 
-           
-  
-         // set the width of the iframe as the  
-         // width of the iframe content 
-         iframe.style.width  =  iframe.contentWindow.document.body.scrollWidth+'px'; 
-              
+        iframe.onload = function() { 
+            iframe.style.height =  iframe.contentWindow.document.body.scrollHeight + 'px'; 
+            iframe.style.width  =  iframe.contentWindow.document.body.scrollWidth+'px';    
         };
 
         setTimeout(function(){ 
