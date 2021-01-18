@@ -17922,20 +17922,24 @@ const fileSelector = document.getElementById('fileInput');
     console.log(file);
     reader.readAsArrayBuffer(file);
     reader.onload = function(){
-      console.log(reader.result);
-      const parsedFile = new ufsd(new KaitaiStream(reader.result));
-      console.log(parsedFile);
-      defaultFile = defaultFileM;
-      console.log("defaultFile.bodyWeight " + defaultFile.bodyWeight);
-      console.log("parsedFile.bodyWeight " + parsedFile.bodyWeight);
-      console.log(generateInstructions(parsedFile));
-      document.getElementById("results").innerHTML = generateInstructions(parsedFile);
-      document.getElementById("input-container-container").style.transform = "translate(0%, 15vh)";
-      document.getElementById("results").style.display = "flex";
-      
-      setTimeout(function(){ 
-          document.getElementById("results").style.opacity = "1";
-      }, 1000);
+        console.log(reader.result);
+        const parsedFile = new ufsd(new KaitaiStream(reader.result));
+        console.log(parsedFile);
+        defaultFile = defaultFileM;
+        console.log("defaultFile.bodyWeight " + defaultFile.bodyWeight);
+        console.log("parsedFile.bodyWeight " + parsedFile.bodyWeight);
+        console.log(generateInstructions(parsedFile));
+        // document.getElementById("results").innerHTML = generateInstructions(parsedFile);
+        document.getElementById("input-container-container").style.transform = "translate(0%, 15vh)";
+        document.getElementById("results").style.display = "flex";
+        var iframe = document.createElement('iframe');
+        document.getElementById("input-container-container").appendChild(iframe);
+        iframe.contentWindow.document.open();
+        iframe.contentWindow.document.write(generateInstructions(parsedFile));
+        iframe.contentWindow.document.close();
+        setTimeout(function(){ 
+            document.getElementById("results").style.opacity = "1";
+        }, 1000);
   };
 });
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})

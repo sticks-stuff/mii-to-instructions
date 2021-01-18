@@ -63,7 +63,7 @@ button {
 	font-size: larger;
 }
 
-.infoText {
+#infoText {
 	bottom: 0;
 	padding: 1em;
 	height: auto;
@@ -94,6 +94,11 @@ button {
 	transition: opacity 0.5s ease;
 	display:none;
 } */
+
+iframe {
+	width: 80%;
+	height: 100vh;
+}
 
 .options {
 	font-size: 2em;
