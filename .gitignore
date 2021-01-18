@@ -115,6 +115,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 *.html
+!index.html
 *.ufsd
 EXAMPLEDATA.txt
 testing.js
