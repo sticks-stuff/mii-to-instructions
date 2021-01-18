@@ -367,15 +367,39 @@ const fileSelector = document.getElementById('fileInput');
         console.log(generateInstructions(parsedFile));
         // document.getElementById("results").innerHTML = generateInstructions(parsedFile);
         document.getElementById("input-container-container").style.transform = "translate(0%, 1vh)";
-        document.getElementById("infoText").style.bottom = "-15vh";
+        document.getElementById("infoText").style.bottom = "0";
         document.getElementById("infoText").style.position = "relative";
-        var iframe = document.createElement('iframe');
+
+        var iframe = document.getElementById("iframe");
+
+        if(iframe != null) {
+            iframe.style.opacity = "0";
+            iframe.remove();
+        }
+        iframe = document.createElement('iframe');
         document.getElementById("input-container-container").appendChild(iframe);
+        iframe.id = "iframe";
         iframe.contentWindow.document.open();
         iframe.contentWindow.document.write(generateInstructions(parsedFile));
         iframe.contentWindow.document.close();
+
+        // Adjusting the iframe height onload event 
+        iframe.onload = function() 
+        // function execute while load the iframe 
+        { 
+          // set the height of the iframe as  
+          // the height of the iframe content 
+          iframe.style.height =  iframe.contentWindow.document.body.scrollHeight + 'px'; 
+           
+  
+         // set the width of the iframe as the  
+         // width of the iframe content 
+         iframe.style.width  =  iframe.contentWindow.document.body.scrollWidth+'px'; 
+              
+        };
+
         setTimeout(function(){ 
-            document.getElementById("results").style.opacity = "1";
+            iframe.style.opacity = "1";
         }, 1000);
   };
 });

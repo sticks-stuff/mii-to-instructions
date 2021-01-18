@@ -85,57 +85,10 @@ button {
 	font-family: 'Open Sans', sans-serif;
 }
 
-/* #results {
-	height: 50vw;
-	position: absolute;
-	max-height: 50vh;
-	opacity: 0%; 
-	transform: translate(0%, 45vh);
-	transition: opacity 0.5s ease;
-	display:none;
-} */
-
 iframe {
 	width: 80%;
 	height: 100vh;
-}
-
-.options {
-	font-size: 2em;
-	font-family: 'Open Sans', sans-serif;
-	display: flex;
-	align-items: center;
-	position: relative;
-}
-
-.options-container {
-	position: absolute;
-    top: 0;
-    padding: 1em;
-	height: auto;
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-}
-
-.options  > *{
-}
-
-#options-help-cypher {
-	font-size: 1em;
-	font-family: 'Open Sans', sans-serif;
-	padding: 1em;
-	display: none;
-}
-
-#options-help-cheating {
-	font-size: 1em;
-	font-family: 'Open Sans', sans-serif;
-	padding: 1em;
-	display: none;
-}
-
-input[type="checkbox"]{
-  transform: scale(2);
-  height: auto;
+	opacity: 0%;
+	transition: opacity 0.5s ease;
+	vertical-align:bottom; 
 }
