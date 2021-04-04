@@ -9,7 +9,8 @@
     "file-to-array-buffer": "^1.0.0",
     "iconv-lite": "^0.6.2",
     "kaitai-struct": "^0.9.0",
-    "number-to-words": "^1.2.4"
+    "number-to-words": "^1.2.4",
+    "watchify": "^4.0.0"
   },
   "devDependencies": {},
   "scripts": {

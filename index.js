@@ -1,10 +1,8 @@
 const ufsd = require("./MiidataSwi");
 const KaitaiStream = require('kaitai-struct/KaitaiStream');
+const mnms = require("./MiidataMs");
+const nfsd = require("./MiidataSdb");
 var converter = require('number-to-words');
-
-fetch("defaultM.ufsd").then(resp => resp.arrayBuffer().then(buf => (defaultFileM = new ufsd(new KaitaiStream(buf)))));
-fetch("defaultF.ufsd").then(resp => resp.arrayBuffer().then(buf => (defaultFileF = new ufsd(new KaitaiStream(buf)))));
-
 
 const map = require('./maps_Switch.json');
 const flip = require('./flip.json');
@@ -66,7 +64,7 @@ function toHex(int) {
     return '0x' + pad(int.toString(16), 2);
 }
 
-function generateInstructions(parsedFile) {
+function generateInstructions(parsedFile, parsedDefaultM, parsedDefaultF) {
     global.hairCount = 0;
     global.eyebrowCount = 0;
     global.eyeCount = 0;
@@ -78,11 +76,11 @@ function generateInstructions(parsedFile) {
     global.faceCount = 0;
     var head;
     if (parsedFile.gender === 0) {
-        defaultFile = defaultFileM;
-        head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/KKyM2gf/male.png' alt='male' width='45' height='45' class='icon'></td><td>Male</td></tr>\n";  
+        defaultFile = parsedDefaultM;
+        head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch on your Switch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/KKyM2gf/male.png' alt='male' width='45' height='45' class='icon'></td><td>Male</td></tr>\n";  
     } else {
-        defaultFile = defaultFileF;
-        head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/tmz1Qw3/female.png' alt='female' width='45' height='45' class='icon'></td><td>Female</td></tr>\n";  
+        defaultFile = parsedDefaultF;
+        head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch on your Switch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/tmz1Qw3/female.png' alt='female' width='45' height='45' class='icon'></td><td>Female</td></tr>\n";  
     }
 
     var face = "";
@@ -358,53 +356,104 @@ const fileSelector = document.getElementById('fileInput');
     console.log(file);
     reader.readAsArrayBuffer(file);
     reader.onload = function(){
-        console.log(reader.result);
-        const parsedFile = new ufsd(new KaitaiStream(reader.result));
-        console.log(parsedFile);
-        defaultFile = defaultFileM;
-        console.log("defaultFile.bodyWeight " + defaultFile.bodyWeight);
-        console.log("parsedFile.bodyWeight " + parsedFile.bodyWeight);
-        console.log(generateInstructions(parsedFile));
-        // document.getElementById("results").innerHTML = generateInstructions(parsedFile);
-        document.getElementById("input-container-container").style.transform = "translate(0%, 1vh)";
-        document.getElementById("infoText").style.bottom = "0";
-        document.getElementById("infoText").style.position = "relative";
+        var fileExtension = file.name.substring(file.name.lastIndexOf(".") + 1);
 
-        var iframe = document.getElementById("iframe");
-
-        if(iframe != null) {
-            iframe.style.opacity = "0";
-            iframe.remove();
+        switch (fileExtension) {
+            case "ufsd":
+                fetch("defaultM.ufsd").then(
+                    resp => resp.arrayBuffer().then(function(buf) {
+                            parsedDefaultM = new ufsd(new KaitaiStream(buf))
+                            fetch("defaultF.ufsd").then(
+                                resp => resp.arrayBuffer().then(function(buf) {
+                                        parsedDefaultF = new ufsd(new KaitaiStream(buf))
+                                        var parsedFile = new ufsd(new KaitaiStream(reader.result));
+                                        displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF);
+                                    }
+                                )
+                            );
+                        }
+                    )
+                );
+                break;        
+            case "mnms":
+                fetch("defaultM.mnms").then(
+                    resp => resp.arrayBuffer().then(function(buf) {
+                            parsedDefaultM = new mnms(new KaitaiStream(buf))
+                            fetch("defaultF.mnms").then(
+                                resp => resp.arrayBuffer().then(function(buf) {
+                                        parsedDefaultF = new mnms(new KaitaiStream(buf))
+                                        var parsedFile = new mnms(new KaitaiStream(reader.result));
+                                        displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF);
+                                    }
+                                )
+                            );
+                        }
+                    )
+                );
+                break;        
+            case "nfsd":
+                fetch("defaultM.nfsd").then(
+                    resp => resp.arrayBuffer().then(function(buf) {
+                            parsedDefaultM = new nfsd(new KaitaiStream(buf))
+                            fetch("defaultF.nfsd").then(
+                                resp => resp.arrayBuffer().then(function(buf) {
+                                        parsedDefaultF = new nfsd(new KaitaiStream(buf))
+                                        var parsedFile = new nfsd(new KaitaiStream(reader.result));
+                                        displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF);
+                                    }
+                                )
+                            );
+                        }
+                    )
+                );
+                break;
+            default:
+                throw new Error("Invalid mii format");
         }
-        iframe = document.createElement('iframe');
-        document.getElementById("input-container-container").appendChild(iframe);
-        iframe.id = "iframe";
-        iframe.contentWindow.document.open();
-        iframe.contentWindow.document.write(generateInstructions(parsedFile));
-        iframe.contentWindow.document.close();
-
-        // Adjusting the iframe height onload event 
-        iframe.onload = function() { 
-            iframe.style.height =  iframe.contentWindow.document.body.scrollHeight + 'px'; 
-            iframe.style.width  =  iframe.contentWindow.document.body.scrollWidth+'px';    
-        };
-
-        var copyText = document.getElementById("copyText");
-
-        if(copyText != null) {
-            copyText.style.opacity = "0";
-            copyText.remove();
-        }
-
-        copyText = document.createElement('input');
-        copyText.type = "text";
-        copyText.value = generateInstructions(parsedFile);
-        copyText.id = "copyText";
-        document.getElementById("input-container-container").appendChild(copyText);
-
-        setTimeout(function(){ 
-            iframe.style.opacity = "1";
-            copyText.style.opacity = "1";
-        }, 1000);
   };
 });
+
+function displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF) {
+    var instructions = generateInstructions(parsedFile, parsedDefaultM, parsedDefaultF)
+
+    document.getElementById("input-container-container").style.transform = "translate(0%, 1vh)";
+    document.getElementById("infoText").style.bottom = "0";
+    document.getElementById("infoText").style.position = "relative";
+
+    var iframe = document.getElementById("iframe");
+
+    if(iframe != null) {
+        iframe.style.opacity = "0";
+        iframe.remove();
+    }
+    iframe = document.createElement('iframe');
+    document.getElementById("input-container-container").appendChild(iframe);
+    iframe.id = "iframe";
+    iframe.contentWindow.document.open();
+    iframe.contentWindow.document.write(instructions);
+    iframe.contentWindow.document.close();
+
+    // Adjusting the iframe height onload event 
+    iframe.onload = function() { 
+        iframe.style.height =  iframe.contentWindow.document.body.scrollHeight + 'px'; 
+        iframe.style.width  =  iframe.contentWindow.document.body.scrollWidth+'px';    
+    };
+
+    var copyText = document.getElementById("copyText");
+
+    if(copyText != null) {
+        copyText.style.opacity = "0";
+        copyText.remove();
+    }
+
+    copyText = document.createElement('input');
+    copyText.type = "text";
+    copyText.value = instructions;
+    copyText.id = "copyText";
+    document.getElementById("input-container-container").appendChild(copyText);
+
+    setTimeout(function(){ 
+        iframe.style.opacity = "1";
+        copyText.style.opacity = "1";
+    }, 1000);
+}
