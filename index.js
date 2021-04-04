@@ -1,13 +1,8 @@
 const fs = require("fs");
 const ufsd = require("./MiidataSwi");
+const mnms = require("./MiidataMiiStudio");
 const KaitaiStream = require('kaitai-struct/KaitaiStream');
 var converter = require('number-to-words');
-
-const defaultM = fs.readFileSync("defaultM.ufsd");
-const parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
-
-const defaultF = fs.readFileSync("defaultF.ufsd");
-const parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
 
 const map = JSON.parse(fs.readFileSync("maps_Switch.json"));
 const flip = JSON.parse(fs.readFileSync("flip.json"));
@@ -78,13 +73,41 @@ function toHex(int) {
 }
 
 function generateInstructions(file) {
-    const parsedFile = new ufsd(new KaitaiStream(fs.readFileSync(file)));
+    var fileExtension = file.substring(file.lastIndexOf(".") + 1);
+    var parsedFile;
+    var defaultM;
+    var parsedDefaultM;
+    var defaultF;
+    var parsedDefaultF;
+
+    switch (fileExtension) {
+        case "ufsd":
+            defaultM = fs.readFileSync("defaultM.ufsd");
+            parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
+
+            defaultF = fs.readFileSync("defaultF.ufsd");
+            parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
+            
+            parsedFile = new ufsd(new KaitaiStream(fs.readFileSync(file)));
+            break;        
+        case "mnms":
+            defaultM = fs.readFileSync("defaultM.ufsd");
+            parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
+
+            defaultF = fs.readFileSync("defaultF.ufsd");
+            parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
+            
+            parsedFile = new mnms(new KaitaiStream(fs.readFileSync(file)));
+            break;
+        default:
+            throw new Error("Invalid mii format");
+    }
     var head;
     if (parsedFile.gender === 0) {
-        defaultFile = new ufsd(new KaitaiStream(fs.readFileSync("defaultM.ufsd")));
+        defaultFile = parsedDefaultM;
         head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/KKyM2gf/male.png' alt='male' width='45' height='45' class='icon'></td><td>Male</td></tr>\n";  
     } else {
-        defaultFile = new ufsd(new KaitaiStream(fs.readFileSync("defaultF.ufsd")));
+        defaultFile = parsedDefaultF;
         head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/tmz1Qw3/female.png' alt='female' width='45' height='45' class='icon'></td><td>Female</td></tr>\n";  
     }
 

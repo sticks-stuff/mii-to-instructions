@@ -118,3 +118,6 @@ dist
 *.ufsd
 EXAMPLEDATA.txt
 testing.js
+maps_Wii.txt
+.gitignore
+matt.miigx
