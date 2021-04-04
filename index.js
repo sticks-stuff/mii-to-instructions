@@ -1,6 +1,8 @@
 const fs = require("fs");
 const ufsd = require("./MiidataSwi");
 const mnms = require("./MiidataMiiStudio");
+const nfsd = require("./MiidataSdb");
+
 const KaitaiStream = require('kaitai-struct/KaitaiStream');
 var converter = require('number-to-words');
 
@@ -91,13 +93,22 @@ function generateInstructions(file) {
             parsedFile = new ufsd(new KaitaiStream(fs.readFileSync(file)));
             break;        
         case "mnms":
-            defaultM = fs.readFileSync("defaultM.ufsd");
-            parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
+            defaultM = fs.readFileSync("defaultM.mnms");
+            parsedDefaultM = new mnms(new KaitaiStream(defaultM));
 
-            defaultF = fs.readFileSync("defaultF.ufsd");
-            parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
+            defaultF = fs.readFileSync("defaultF.mnms");
+            parsedDefaultF = new mnms(new KaitaiStream(defaultF));
             
             parsedFile = new mnms(new KaitaiStream(fs.readFileSync(file)));
+            break;        
+        case "nfsd":
+            defaultM = fs.readFileSync("defaultM.nfsd");
+            parsedDefaultM = new nfsd(new KaitaiStream(defaultM));
+
+            defaultF = fs.readFileSync("defaultF.nfsd");
+            parsedDefaultF = new nfsd(new KaitaiStream(defaultF));
+            
+            parsedFile = new nfsd(new KaitaiStream(fs.readFileSync(file)));
             break;
         default:
             throw new Error("Invalid mii format");
