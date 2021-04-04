@@ -1,6 +1,6 @@
 const fs = require("fs");
 const ufsd = require("./MiidataSwi");
-const mnms = require("./MiidataMiiStudio");
+const mnms = require("./MiidataMs");
 const nfsd = require("./MiidataSdb");
 
 const KaitaiStream = require('kaitai-struct/KaitaiStream');
