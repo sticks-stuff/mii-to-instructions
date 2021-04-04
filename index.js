@@ -74,45 +74,7 @@ function toHex(int) {
     return '0x' + pad(int.toString(16), 2);
 }
 
-function generateInstructions(file) {
-    var fileExtension = file.substring(file.lastIndexOf(".") + 1);
-    var parsedFile;
-    var defaultM;
-    var parsedDefaultM;
-    var defaultF;
-    var parsedDefaultF;
-
-    switch (fileExtension) {
-        case "ufsd":
-            defaultM = fs.readFileSync("defaultM.ufsd");
-            parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
-
-            defaultF = fs.readFileSync("defaultF.ufsd");
-            parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
-            
-            parsedFile = new ufsd(new KaitaiStream(fs.readFileSync(file)));
-            break;        
-        case "mnms":
-            defaultM = fs.readFileSync("defaultM.mnms");
-            parsedDefaultM = new mnms(new KaitaiStream(defaultM));
-
-            defaultF = fs.readFileSync("defaultF.mnms");
-            parsedDefaultF = new mnms(new KaitaiStream(defaultF));
-            
-            parsedFile = new mnms(new KaitaiStream(fs.readFileSync(file)));
-            break;        
-        case "nfsd":
-            defaultM = fs.readFileSync("defaultM.nfsd");
-            parsedDefaultM = new nfsd(new KaitaiStream(defaultM));
-
-            defaultF = fs.readFileSync("defaultF.nfsd");
-            parsedDefaultF = new nfsd(new KaitaiStream(defaultF));
-            
-            parsedFile = new nfsd(new KaitaiStream(fs.readFileSync(file)));
-            break;
-        default:
-            throw new Error("Invalid mii format");
-    }
+function generateInstructions(parsedFile, parsedDefaultM, parsedDefaultF) {
     var head;
     if (parsedFile.gender === 0) {
         defaultFile = parsedDefaultM;
@@ -388,4 +350,49 @@ function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, le
 }
 
 var myArgs = process.argv.slice(2);
-console.log(generateInstructions(myArgs[0]));
+
+if(myArgs[0] == "miistudio") {
+    var defaultM = fs.readFileSync("defaultM.mnms");
+    var parsedDefaultM = new mnms(new KaitaiStream(defaultM));
+
+    var defaultF = fs.readFileSync("defaultF.mnms");
+    var parsedDefaultF = new mnms(new KaitaiStream(defaultF));
+    console.log(generateInstructions(new mnms(new KaitaiStream(Buffer.from(myArgs[1], "hex"))), parsedDefaultM, parsedDefaultF));
+} else {
+    var file = myArgs[0];
+    var fileExtension = file.substring(file.lastIndexOf(".") + 1);
+
+    switch (fileExtension) {
+        case "ufsd":
+            var defaultM = fs.readFileSync("defaultM.ufsd");
+            var parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
+    
+            var defaultF = fs.readFileSync("defaultF.ufsd");
+            var parsedDefaultF = new ufsd(new KaitaiStream(defaultF));
+            
+            var parsedFile = new ufsd(new KaitaiStream(fs.readFileSync(file)));
+            break;        
+        case "mnms":
+            var defaultM = fs.readFileSync("defaultM.mnms");
+            var parsedDefaultM = new mnms(new KaitaiStream(defaultM));
+    
+            var defaultF = fs.readFileSync("defaultF.mnms");
+            var parsedDefaultF = new mnms(new KaitaiStream(defaultF));
+            
+            var parsedFile = new mnms(new KaitaiStream(fs.readFileSync(file)));
+            break;        
+        case "nfsd":
+            var defaultM = fs.readFileSync("defaultM.nfsd");
+            var parsedDefaultM = new nfsd(new KaitaiStream(defaultM));
+    
+            var defaultF = fs.readFileSync("defaultF.nfsd");
+            var parsedDefaultF = new nfsd(new KaitaiStream(defaultF));
+            
+            var parsedFile = new nfsd(new KaitaiStream(fs.readFileSync(file)));
+            break;
+        default:
+            throw new Error("Invalid mii format");
+    }
+    
+    console.log(generateInstructions(parsedFile, parsedDefaultM, parsedDefaultF));
+}
