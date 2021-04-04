@@ -18,23 +18,18 @@ var MiidataSwi = (function() {
     this._read();
   }
   MiidataSwi.prototype._read = function() {
-    this.unknownData = new Array(16);
+    this.miiId = new Array(16);
     for (var i = 0; i < 16; i++) {
-      this.unknownData[i] = this._io.readU1();
+      this.miiId[i] = this._io.readU1();
     }
-    this.miiName = KaitaiStream.bytesToStr(this._io.readBytes(20), "utf-16le");
-    this.unknownBuffer = new Array(3);
-    for (var i = 0; i < 3; i++) {
-      this.unknownBuffer[i] = this._io.readU1();
-    }
+    this.miiName = KaitaiStream.bytesToStr(this._io.readBytes(22), "utf-16le");
+    this.fontRegion = this._io.readU1();
     this.favoriteColor = this._io.readU1();
     this.gender = this._io.readU1();
     this.bodyHeight = this._io.readU1();
     this.bodyWeight = this._io.readU1();
-    this.unknownBuffer2 = new Array(2);
-    for (var i = 0; i < 2; i++) {
-      this.unknownBuffer2[i] = this._io.readU1();
-    }
+    this.specialType = this._io.readU1();
+    this.regionMove = this._io.readU1();
     this.faceType = this._io.readU1();
     this.faceColor = this._io.readU1();
     this.faceWrinkles = this._io.readU1();
@@ -77,22 +72,19 @@ var MiidataSwi = (function() {
     this.moleSize = this._io.readU1();
     this.moleHorizontal = this._io.readU1();
     this.moleVertical = this._io.readU1();
-    this.unknownBuffer3 = new Array(1);
-    for (var i = 0; i < 1; i++) {
-      this.unknownBuffer3[i] = this._io.readU1();
-    }
+    this.alwaysZero = this._io.readU1();
   }
 
   /**
-   * Currently unknown data.
+   * Mii ID. An identifier used to save Miis in most games.
    */
 
   /**
-   * Mii name. Can be up to 10 characters long. Different from the Mii name that appears in Super Smash Bros. Ultimate - in game, this is never seen.
+   * Mii name. Can be up to 10 characters long. Different from the Mii name that appears in Super Smash Bros. Ultimate - in that game, this is never seen.
    */
 
   /**
-   * Currently unknown data - likely a 00 buffer between the name and misc. info and the rest of the Mii data.
+   * Font region. 0 = USA + PAL + JPN, 1 = CHN, 2 = KOR, 3 = TWN.
    */
 
   /**
@@ -112,7 +104,11 @@ var MiidataSwi = (function() {
    */
 
   /**
-   * Currently unknown data - likely a 00 buffer between the Mii body data and the Mii face data.
+   * Toggle if the Mii is a Special Mii. Completely unused functionality. Does not allow editing the Mii, or using the Mii in games.
+   */
+
+  /**
+   * Currently unknown.
    */
 
   /**
@@ -284,7 +280,7 @@ var MiidataSwi = (function() {
    */
 
   /**
-   * Currently unknown data - likely a 00 buffer.
+   * This value is always set to 0. The Switch does properly document it, though, so it may end up used in some update... but most likely, it will always remain zero.
    */
 
   return MiidataSwi;

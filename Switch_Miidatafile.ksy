@@ -2,21 +2,19 @@ meta:
   id: miidata_swi
   endian: le
 seq:
-  - id: unknown_data
+  - id: mii_id
     type: u1
     repeat: expr
     repeat-expr: 16
-    doc: Currently unknown data.
+    doc: Mii ID. An identifier used to save Miis in most games.
   - id: mii_name
     type: str
-    size: 20
+    size: 22
     encoding: utf-16le
-    doc: Mii name. Can be up to 10 characters long. Different from the Mii name that appears in Super Smash Bros. Ultimate - in game, this is never seen.
-  - id: unknown_buffer
+    doc: Mii name. Can be up to 10 characters long. Different from the Mii name that appears in Super Smash Bros. Ultimate - in that game, this is never seen.
+  - id: font_region
     type: u1
-    repeat: expr
-    repeat-expr: 3
-    doc: Currently unknown data - likely a 00 buffer between the name and misc. info and the rest of the Mii data.
+    doc: Font region. 0 = USA + PAL + JPN, 1 = CHN, 2 = KOR, 3 = TWN.
   - id: favorite_color
     type: u1
     doc: Favorite color. Ranges from 0 to 11.
@@ -29,11 +27,12 @@ seq:
   - id: body_weight
     type: u1
     doc: Body weight. Ranges from 0 to 127, small to large.
-  - id: unknown_buffer2
+  - id: special_type
     type: u1
-    repeat: expr
-    repeat-expr: 2
-    doc: Currently unknown data - likely a 00 buffer between the Mii body data and the Mii face data.
+    doc: Toggle if the Mii is a Special Mii. Completely unused functionality. Does not allow editing the Mii, or using the Mii in games.
+  - id: region_move
+    type: u1
+    doc: Currently unknown.
   - id: face_type
     type: u1
     doc: Face shape. Ranges from 0 to 11. Not ordered the same as visible in editor.
@@ -160,8 +159,6 @@ seq:
   - id: mole_vertical
     type: u1
     doc: Mole Y (vertical) position. Ranges from 30 to 0, low to high.
-  - id: unknown_buffer3
+  - id: always_zero
     type: u1
-    repeat: expr
-    repeat-expr: 1
-    doc: Currently unknown data - likely a 00 buffer.
+    doc: This value is always set to 0. The Switch does properly document it, though, so it may end up used in some update... but most likely, it will always remain zero.
