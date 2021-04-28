@@ -359,7 +359,7 @@ const fileSelector = document.getElementById('fileInput');
         var fileExtension = file.name.substring(file.name.lastIndexOf(".") + 1);
 
         switch (fileExtension) {
-            case "ufsd":
+            case "charinfo":
                 fetch("defaultM.ufsd").then(
                     resp => resp.arrayBuffer().then(function(buf) {
                             parsedDefaultM = new ufsd(new KaitaiStream(buf))
