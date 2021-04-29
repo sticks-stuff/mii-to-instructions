@@ -171,7 +171,7 @@ function generateInstructions(parsedFile, parsedDefaultM, parsedDefaultF) {
 
     var mouth = "";
     mouth += addInstruction("mouthType", parsedFile, defaultFile, "mouthCount");
-    if (mouthColor.possible.includes(toHex(parsedFile.mouthColor))) {
+    if (mouthColor.possible.includes(toHex(parsedFile.mouthType))) {
         mouth += addInstructionColor("mouthColor", parsedFile, defaultFile, "mouthCount");
     }
     mouth += addInstructionNumber("mouthVertical", parsedFile, defaultFile, "move up", "move down", "mouthCount");
