@@ -172,7 +172,8 @@ function generateInstructions(parsedFile, parsedDefaultM, parsedDefaultF) {
 
     mouth = "";
     mouth += addInstruction("mouthType", parsedFile, defaultFile, "mouthCount");
-    if (mouthColor.possible.includes(toHex(parsedFile.mouthColor))) {
+    console.log(toHex(parsedFile.mouthColor));
+    if (mouthColor.possible.includes(toHex(parsedFile.mouthType))) {
         mouth += addInstructionColor("mouthColor", parsedFile, defaultFile, "mouthCount");
     }
     mouth += addInstructionNumber("mouthVertical", parsedFile, defaultFile, "move up", "move down", "mouthCount");
@@ -363,7 +364,7 @@ if(myArgs[0] == "miistudio") {
     var fileExtension = file.substring(file.lastIndexOf(".") + 1);
 
     switch (fileExtension) {
-        case "ufsd":
+        case "charinfo":
             var defaultM = fs.readFileSync("defaultM.ufsd");
             var parsedDefaultM = new ufsd(new KaitaiStream(defaultM));
     
