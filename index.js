@@ -62,7 +62,7 @@ function getEyebrowRotation(eyebrowType) {
     if (eyebrowType === '0x17') {
         return 0;
     } else {
-        return getStringLocation(parsedrotation.eyebrows, eyebrowType).row + 4;
+        return getStringLocation(parsedrotation.eyebrows, eyebrowType).row + 3;
     }
 }
 
