@@ -46,6 +46,9 @@
 	align-items: center;
 	justify-content: center;
 	transform: translate(0%, 45vh);
+}
+
+.transform-transition {
 	transition-property: transform;
 	transition-duration: 1s;
 }

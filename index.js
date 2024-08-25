@@ -348,75 +348,131 @@ function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, le
     }
 }
 
+const supportedFormatsTable = [
+    {
+        // .charinfo/.ufsd/nn::mii::CharInfo (Switch)
+        sizes: [88],
+        ctor: ufsd,
+        defaultM: 'defaultM.ufsd',
+        defaultF: 'defaultF.ufsd'
+    },
+    {
+        // mii studio decoded URL format/LocalStorage format
+        sizes: [46],
+        ctor: mnms,
+        defaultM: 'defaultM.mnms',
+        defaultF: 'defaultF.mnms'
+    },
+    {
+        // .nfsd/nn::mii::StoreData
+        sizes: [68,
+        // .nfcd/nn::mii::CoreData (Switch)
+                48],
+        ctor: nfsd,
+        defaultM: 'defaultM.nfsd',
+        defaultF: 'defaultF.nfsd'
+    },
+];
+
+/*
+// kaitai: Gen2Wiiu3dsMiitomo/CoreData3ds
+// .ffsd/nn::mii::Ver3StoreData/(C/F/A)FLStoreData, 96 bytes
+// "3dsmii"/(C/F/A)FLiMiiDataOfficial, 92 byes
+// kaitai: Gen1Wii/CoreDataWii
+// .rcd/RFLCharData, 92 bytes
+// .rsd/RFLStoreData, 96 bytes
+*/
+
+// input is data, this ends up calling displayToScreen
+function parseDataAndDisplay(data, noAnimate) {
+    const size = data.length;
+    // this will be falsey if it does not exist
+    const format = supportedFormatsTable.find(entry => entry.sizes.includes(size));
+    
+    if (!format) {
+        alert('Data format not supported. Please check its size.');
+        return;
+    }
+
+    // in case it does not exist (???)
+    const ctor = format.ctor;
+    if (!ctor) {
+        const err = 'Constructor not found for data of size ' + size + ', for some reason.';
+        alert(err);
+        throw new Error(err);
+    }
+
+    let buf = data;
+    // create new kaitai stream from data before constructing it
+    if (format.sizes[0] !== size) {
+        buf = new Uint8Array(format.sizes[0]);
+        // copy the data to the larger buffer
+        buf.set(data, 0);
+        // create the stream with that buffer
+    }
+    const parsedFile = new ctor(new KaitaiStream(buf));
+    // pass in the format
+    fetchDefaultsAndDisplay(parsedFile, format, noAnimate);
+}
+
+function fetchDefaultsAndDisplay(parsedFile, format, noAnimate) {
+    fetch(format.defaultM).then(
+        resp => resp.arrayBuffer().then(function(buf) {
+            const parsedDefaultM = new format.ctor(new KaitaiStream(buf));
+            fetch(format.defaultF).then(
+                resp => resp.arrayBuffer().then(function(buf) {
+                    const parsedDefaultF = new format.ctor(new KaitaiStream(buf));
+                    displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF, noAnimate);
+                })
+            );
+        })
+    );
+}
+
 const reader = new FileReader();
 
 const fileSelector = document.getElementById('fileInput');
-  fileSelector.addEventListener('change', (event) => {
+fileSelector.addEventListener('change', (event) => {
     const file = event.target.files[0];
     console.log(file);
     reader.readAsArrayBuffer(file);
-    reader.onload = function(){
-        var fileExtension = file.name.substring(file.name.lastIndexOf(".") + 1);
-
-        switch (fileExtension) {
-            case "charinfo":
-                fetch("defaultM.ufsd").then(
-                    resp => resp.arrayBuffer().then(function(buf) {
-                            parsedDefaultM = new ufsd(new KaitaiStream(buf))
-                            fetch("defaultF.ufsd").then(
-                                resp => resp.arrayBuffer().then(function(buf) {
-                                        parsedDefaultF = new ufsd(new KaitaiStream(buf))
-                                        var parsedFile = new ufsd(new KaitaiStream(reader.result));
-                                        displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF);
-                                    }
-                                )
-                            );
-                        }
-                    )
-                );
-                break;        
-            case "mnms":
-                fetch("defaultM.mnms").then(
-                    resp => resp.arrayBuffer().then(function(buf) {
-                            parsedDefaultM = new mnms(new KaitaiStream(buf))
-                            fetch("defaultF.mnms").then(
-                                resp => resp.arrayBuffer().then(function(buf) {
-                                        parsedDefaultF = new mnms(new KaitaiStream(buf))
-                                        var parsedFile = new mnms(new KaitaiStream(reader.result));
-                                        displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF);
-                                    }
-                                )
-                            );
-                        }
-                    )
-                );
-                break;        
-            case "nfsd":
-                fetch("defaultM.nfsd").then(
-                    resp => resp.arrayBuffer().then(function(buf) {
-                            parsedDefaultM = new nfsd(new KaitaiStream(buf))
-                            fetch("defaultF.nfsd").then(
-                                resp => resp.arrayBuffer().then(function(buf) {
-                                        parsedDefaultF = new nfsd(new KaitaiStream(buf))
-                                        var parsedFile = new nfsd(new KaitaiStream(reader.result));
-                                        displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF);
-                                    }
-                                )
-                            );
-                        }
-                    )
-                );
-                break;
-            default:
-                throw new Error("Invalid mii format");
-        }
-  };
+    reader.onload = function() {
+        parseDataAndDisplay(new Uint8Array(reader.result));
+    };
 });
 
-function displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF) {
+window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const dataParam = urlParams.get('data');
+    if (dataParam) {
+        try {
+            let decodedData;
+            if (dataParam.match(/^[a-fA-F0-9\s]+$/)) {
+                decodedData = new Uint8Array(dataParam.replace(/\s/g, '').match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+            } else {
+                decodedData = new Uint8Array(atob(dataParam.replace(/\s/g, '')).split('').map(c => c.charCodeAt(0)));
+            }
+
+            parseDataAndDisplay(decodedData, true); // true = indicate no delay
+        } catch (err) {
+            console.error('Failed to decode or parse data:', err);
+            alert('Failed to decode or parse data parameter. Please check your input.');
+        }
+    }
+};
+
+const inputContainerContainer = document.getElementById("input-container-container");
+
+function displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF, noAnimate) {
+    if (noAnimate) {
+        inputContainerContainer.className = '';
+    } else {
+        inputContainerContainer.className = 'transform-transition';
+    }
+
     var instructions = generateInstructions(parsedFile, parsedDefaultM, parsedDefaultF)
 
-    document.getElementById("input-container-container").style.transform = "translate(0%, 1vh)";
+    inputContainerContainer.style.transform = "translate(0%, 1vh)";
     document.getElementById("infoText").style.bottom = "0";
     document.getElementById("infoText").style.position = "relative";
 
@@ -427,7 +483,7 @@ function displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF) {
         iframe.remove();
     }
     iframe = document.createElement('iframe');
-    document.getElementById("input-container-container").appendChild(iframe);
+    inputContainerContainer.appendChild(iframe);
     iframe.id = "iframe";
     iframe.contentWindow.document.open();
     iframe.contentWindow.document.write(instructions);
@@ -450,10 +506,15 @@ function displayToScreen(parsedFile, parsedDefaultM, parsedDefaultF) {
     copyText.type = "text";
     copyText.value = instructions;
     copyText.id = "copyText";
-    document.getElementById("input-container-container").appendChild(copyText);
+    inputContainerContainer.appendChild(copyText);
 
-    setTimeout(function(){ 
+    if (noAnimate) {
         iframe.style.opacity = "1";
         copyText.style.opacity = "1";
-    }, 1000);
+    } else {
+        setTimeout(function(){ 
+            iframe.style.opacity = "1";
+            copyText.style.opacity = "1";
+        }, 1000);
+    }
 }
