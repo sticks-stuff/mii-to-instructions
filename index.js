@@ -348,6 +348,34 @@ function addInstructionRotation (attrbute, parsedFile, defaultFile, moreText, le
     }
 }
 
+// NOTE: Since the main logic uses the "facialHair" prefix
+// for beard/mustache properties, and the gen3_studio Kaitais
+// use different prefixes, this constructor is used in order
+// to account for that difference.
+function mnmsCtorAndAssignFacialHairFromBeardFields(...args) {
+    // wrap mnms constructor
+    const instance = new mnms(...args);
+
+    // if the fields are properly named according to the others then skip
+    if(instance.facialHairBeard !== undefined)
+        return;
+
+    Object.defineProperty(instance, 'facialHairBeard', {
+        value: instance.beardGoatee
+    });
+    Object.defineProperty(instance, 'facialHairSize', {
+        value: instance.beardSize
+    });
+    Object.defineProperty(instance, 'facialHairMustache', {
+        value: instance.beardMustache
+    });
+    Object.defineProperty(instance, 'facialHairVertical', {
+        value: instance.beardVertical
+    });
+
+    return instance;
+}
+
 const supportedFormatsTable = [
     {
         // .charinfo/.ufsd/nn::mii::CharInfo (Switch)
@@ -359,7 +387,8 @@ const supportedFormatsTable = [
     {
         // mii studio decoded URL format/LocalStorage format
         sizes: [46],
-        ctor: mnms,
+        // wrapper to name fields the way the logic expects
+        ctor: mnmsCtorAndAssignFacialHairFromBeardFields,
         defaultM: 'defaultM.mnms',
         defaultF: 'defaultF.mnms'
     },
@@ -456,7 +485,7 @@ window.onload = function() {
             parseDataAndDisplay(decodedData, true); // true = indicate no delay
         } catch (err) {
             console.error('Failed to decode or parse data:', err);
-            alert('Failed to decode or parse data parameter. Please check your input.');
+            alert('Failed to decode or parse data parameter. Please check your input. ' + err);
         }
     }
 };
