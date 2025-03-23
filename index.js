@@ -9,6 +9,7 @@ const flip = require('./flip.json');
 const mouthColor = require('./mouthColor.json');
 const parsedrotation = require('./rotation.json');
 const icons = require('./icons.json');
+const defaults = require('./defaults.json');
 
 console.log(map);
 console.log(flip);
@@ -49,11 +50,7 @@ function pad(n, width, z) {
 }
 
 function getEyebrowRotation(eyebrowType) {
-    if (eyebrowType === '0x17') {
-        return 0;
-    } else {
-        return getStringLocation(parsedrotation.eyebrows, eyebrowType).row + 3;
-    }
+    return getStringLocation(parsedrotation.eyebrows, eyebrowType).row + 3;
 }
 
 function getEyeRotation(eyeType) {
@@ -77,10 +74,16 @@ function generateInstructions(parsedFile, parsedDefaultM, parsedDefaultF) {
     var head;
     if (parsedFile.gender == 0) {
         defaultFile = parsedDefaultM;
-        head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch on your Switch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/KKyM2gf/male.png' alt='male' width='45' height='45' class='icon'></td><td>Male</td></tr>\n";  
+        head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch on your Switch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'>";
+        head += icons.gender[0];
+        //<img src='./male.png' alt='male' width='45' height='45' class='icon'>
+        head += "</td><td>Male</td></tr>\n";
     } else {
         defaultFile = parsedDefaultF;
-        head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch on your Switch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'><img src='https://i.ibb.co/tmz1Qw3/female.png' alt='female' width='45' height='45' class='icon'></td><td>Female</td></tr>\n";  
+        head = "<div class='instructions'>\n<p class='startfromscratch'>Start a new character from scratch on your Switch and make these changes.</p>\n<table class='instructions'>\n<tbody><tr><th valign='top' align='right' style='font-size:20'>Gender</th><td class='icon'>";
+        head += icons.gender[1];
+        //<img src='./female.png' alt='female' width='45' height='45' class='icon'>
+        head += "</td><td>Female</td></tr>\n";
     }
 
     var face = "";
@@ -381,16 +384,16 @@ const supportedFormatsTable = [
         // .charinfo/.ufsd/nn::mii::CharInfo (Switch)
         sizes: [88],
         ctor: ufsd,
-        defaultM: 'defaultM.ufsd',
-        defaultF: 'defaultF.ufsd'
+        defaultM: defaults.ufsd.male,
+        defaultF: defaults.ufsd.female
     },
     {
         // mii studio decoded URL format/LocalStorage format
         sizes: [46],
         // wrapper to name fields the way the logic expects
         ctor: mnmsCtorAndAssignFacialHairFromBeardFields,
-        defaultM: 'defaultM.mnms',
-        defaultF: 'defaultF.mnms'
+        defaultM: defaults.mnms.male,
+        defaultF: defaults.mnms.female
     },
     {
         // .nfsd/nn::mii::StoreData
@@ -398,8 +401,8 @@ const supportedFormatsTable = [
         // .nfcd/nn::mii::CoreData (Switch)
                 48],
         ctor: nfsd,
-        defaultM: 'defaultM.nfsd',
-        defaultF: 'defaultF.nfsd'
+        defaultM: defaults.nfsd.male,
+        defaultF: defaults.nfsd.female
     },
 ];
 

@@ -1,0 +1,15 @@
+{
+    "mnms": {
+        "male": "data:application/octet-stream;base64,CABAAwgEBAICDAMBBgQGAgoAAAAAAAAIBAAKAQAhQAQAAhQDEwQXDQQACgQBCQ==",
+        "female": "data:application/octet-stream;base64,CABAAwgDBAQCDAMBBgQAAgoAAAAAAAEIBAAKAQAMQAQAAhQDEwQXDQQACgQBCQ=="
+    },
+    "ufsd": {
+        "male": "data:application/octet-stream;base64,AAAAAAAAAACAAAAAAAAAAGQAZQBmAGEAdQBsAHQATQAAAAAAAAAAAABAQAAAAAAAACEBAAIIBAMEAgwGAQQDBgIKAQQJFxMEAw0IAAAECgAIBAoABAIUAA==",
+        "female": "data:application/octet-stream;base64,AAAAAAAAAACAAAAAAAAAAGQAZQBmAGEAdQBsAHQARgAAAAAAAAAAAAFAQAAAAAAAAAwBAAQIBAMDAgwAAQQDBgIKAQQJFxMEAw0IAAAECgAIBAoABAIUAA=="
+    },
+    "nfsd": {
+        "male": "data:application/octet-stream;base64,IUBAAQgBEwgIAheMBgFpbYpqghQAAAAgZHJERGQAZQBmAGEAdQBsAHQATQAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=",
+        "female": "data:application/octet-stream;base64,DEBAAYgBEwgIBBeMAAFpbWpqghQAAAAgZHJERGQAZQBmAGEAdQBsAHQARgAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA="
+    }
+}
+
